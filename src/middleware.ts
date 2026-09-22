@@ -8,13 +8,13 @@ function isProtected(pathname: string) {
     "/playground",
     "/usage",
     "/keys",
-    "/docs",
     "/audit",
     "/admin",
     "/billing",
     "/org",
     "/shares",
     "/models",
+    "/settings",
   ].some((p) => pathname === p || pathname.startsWith(p + "/"));
 }
 
@@ -41,8 +41,6 @@ export const config = {
     "/usage/:path*",
     "/keys",
     "/keys/:path*",
-    "/docs",
-    "/docs/:path*",
     "/audit",
     "/audit/:path*",
     "/admin",
@@ -55,5 +53,7 @@ export const config = {
     "/shares/:path*",
     "/models",
     "/models/:path*",
+    "/settings",
+    "/settings/:path*",
   ],
 };

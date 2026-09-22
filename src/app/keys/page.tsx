@@ -25,6 +25,7 @@ export default function KeysPage() {
   const [revealed, setRevealed] = useState<{ secret: string; name: string } | null>(null);
   const [query, setQuery] = useState("");
   const [menu, setMenu] = useState<string | null>(null);
+  const [confirmId, setConfirmId] = useState<string | null>(null);
   const [copiedSecret, setCopiedSecret] = useState(false);
   const [sort, setSort] = useState<{ key: "name" | "created"; dir: "asc" | "desc" }>({
     key: "created",
@@ -80,6 +81,7 @@ export default function KeysPage() {
       return;
     }
     setMenu(null);
+    setConfirmId(null);
     await load();
   }
 
@@ -157,8 +159,14 @@ export default function KeysPage() {
                       </button>
                       {menu === k.id && (
                         <div className="absolute right-4 top-10 z-10 w-40 rounded-lg border border-neutral-200 bg-white p-1 text-left shadow-lg">
-                          <p className="px-2 py-1.5 text-xs text-neutral-500">{t("keys.revokeConfirm")}</p>
-                          <button type="button" onClick={() => revoke(k.id)} className="w-full rounded-md px-2 py-1.5 text-left text-sm text-red-600 hover:bg-red-50">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setConfirmId(k.id);
+                              setMenu(null);
+                            }}
+                            className="w-full rounded-md px-2 py-1.5 text-left text-sm text-red-600 hover:bg-red-50"
+                          >
                             {t("keys.revoke")}
                           </button>
                         </div>
@@ -172,6 +180,21 @@ export default function KeysPage() {
         </table>
       </div>
       <p className="mt-auto pt-8 text-xs text-neutral-500">{t("keys.footer")}</p>
+      {confirmId && (
+        <Modal title={t("keys.revokeConfirm")} onClose={() => setConfirmId(null)}>
+          <p className="mt-2 text-sm text-neutral-600">
+            {keys.find((k) => k.id === confirmId)?.name}. {t("keys.revokeBody")}
+          </p>
+          <div className="mt-4 flex justify-end gap-2">
+            <button type="button" className="rounded-md border border-neutral-200 px-3 py-2 text-sm" onClick={() => setConfirmId(null)}>
+              {t("common.cancel")}
+            </button>
+            <button type="button" className="rounded-md bg-red-600 px-3 py-2 text-sm font-medium text-white" onClick={() => revoke(confirmId)}>
+              {t("keys.revoke")}
+            </button>
+          </div>
+        </Modal>
+      )}
 
       {modal && (
         <Modal

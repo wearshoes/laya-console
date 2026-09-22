@@ -78,7 +78,10 @@ export function rejectWithAudit(
   return { status, payload };
 }
 
-export function dailyUsage(userId?: string) {
+export function dailyUsage(
+  userId?: string,
+  filters?: { preset?: string; outcome?: "all" | "ok" | "error" }
+) {
   const db = getDb();
   const where = ["auth_failure = 0", "status IS NOT NULL"];
   const params: unknown[] = [];
@@ -86,6 +89,12 @@ export function dailyUsage(userId?: string) {
     where.push("user_id = ?");
     params.push(userId);
   }
+  if (filters?.preset && (PRESETS as readonly string[]).includes(filters.preset)) {
+    where.push("preset = ?");
+    params.push(filters.preset);
+  }
+  if (filters?.outcome === "ok") where.push("status BETWEEN 200 AND 299");
+  if (filters?.outcome === "error") where.push("(status < 200 OR status > 299)");
   return db
     .prepare(
       `SELECT date(created_at) AS day,

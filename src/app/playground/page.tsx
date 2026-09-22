@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { JsonEditor } from "@/components/JsonEditor";
+import { Modal } from "@/components/Modal";
 import { useI18n } from "@/components/LocaleProvider";
 import { copyText } from "@/lib/copy-text";
 import { DEFAULT_STATE, PRESET_IDS, PRESET_STATES, type PresetId } from "@/lib/prompts";
@@ -24,6 +25,8 @@ function PlaygroundInner() {
   const [showExamples, setShowExamples] = useState(true);
   const [shared, setShared] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
+  const [shareOpen, setShareOpen] = useState(false);
+  const [shareTitle, setShareTitle] = useState("");
   const params = useSearchParams();
   const presetOnce = useRef(false);
 
@@ -90,11 +93,18 @@ function PlaygroundInner() {
     setShowExamples(true);
   }
 
+  function openShare() {
+    setShareTitle(useCustom ? "Custom questions" : preset);
+    setShared(false);
+    setShareUrl("");
+    setShareOpen(true);
+  }
+
   async function share() {
     const parsed = JSON.parse(stateText);
     const body = useCustom
-      ? { title: "Custom questions", preset: null, state: { state: parsed, questions: JSON.parse(custom) } }
-      : { title: preset, preset, state: parsed };
+      ? { title: shareTitle || "Custom questions", preset: null, state: { state: parsed, questions: JSON.parse(custom) } }
+      : { title: shareTitle || preset, preset, state: parsed };
     const res = await fetch("/api/shares", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -153,17 +163,19 @@ function PlaygroundInner() {
         </button>
         <button
           type="button"
-          onClick={share}
+          onClick={() => setShowExamples(true)}
+          className="rounded-md border border-neutral-200 px-2.5 py-1 text-xs transition hover:bg-neutral-50"
+        >
+          {t("playground.examples")}
+        </button>
+        <button
+          type="button"
+          onClick={openShare}
           disabled={!stateValid || !customValid}
           className="rounded-md border border-neutral-200 px-2.5 py-1 text-xs transition hover:bg-neutral-50 disabled:opacity-40"
         >
-          {shared ? t("playground.shared") : t("playground.share")}
+          {t("playground.share")}
         </button>
-        {shareUrl ? (
-          <Link href={shareUrl} className="max-w-[220px] truncate text-xs text-[#2f6fed]">
-            {shareUrl}
-          </Link>
-        ) : null}
         <div className="ml-auto flex items-center gap-1 rounded-md border border-neutral-200 p-0.5">
           <button
             type="button"
@@ -295,13 +307,38 @@ function PlaygroundInner() {
           )}
         </section>
       </div>
+      {shareOpen && (
+        <Modal title={t("playground.share")} onClose={() => setShareOpen(false)}>
+          <p className="mt-2 text-sm text-neutral-600">{t("playground.shareBody")}</p>
+          <label className="mt-3 block text-xs text-neutral-500">
+            {t("product.shareTitle")}
+            <input value={shareTitle} onChange={(e) => setShareTitle(e.target.value)} className="field mt-1" />
+          </label>
+          <pre className="mt-3 max-h-40 overflow-auto rounded-lg bg-neutral-950 p-3 font-mono text-[11px] text-neutral-100">
+            {stateText}
+          </pre>
+          {shareUrl ? (
+            <Link href={shareUrl} className="mt-3 block truncate text-sm text-[#2f6fed]">
+              {shared ? t("playground.shared") : shareUrl}
+            </Link>
+          ) : null}
+          <div className="mt-4 flex justify-end gap-2">
+            <button type="button" className="rounded-md border border-neutral-200 px-3 py-2 text-sm" onClick={() => setShareOpen(false)}>
+              {t("common.cancel")}
+            </button>
+            <button type="button" className="btn-black h-10 px-3 text-sm" onClick={share} disabled={!stateValid || !customValid}>
+              {t("playground.createLink")}
+            </button>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
 
 function Examples({ onPick, onClose }: { onPick: (id: PresetId) => void; onClose: () => void }) {
   const { t } = useI18n();
-  const cards: PresetId[] = ["triage", "guard", "router"];
+  const cards: PresetId[] = [...PRESET_IDS];
   return (
     <div className="fade-in min-h-0 flex-1 overflow-auto">
       <div className="flex items-start justify-between px-6 pt-6">

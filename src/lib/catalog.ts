@@ -40,6 +40,17 @@ export const DOC_PAGES: DocPage[] = [
           "控制台不处理银行卡支付。账单页上的额度是不扣费的预览。上游凭证只放在服务器环境变量里。"
         ),
       },
+      {
+        h: enzh("A first request", "第一次请求"),
+        p: enzh(
+          "After you create a key, send state and a preset. The console checks the key, writes an audit row, then proxies the body.",
+          "创建密钥后，发送 state 和一个预设。控制台会校验密钥、写入审计，再转发请求体。"
+        ),
+        code: `curl -sS "$ORIGIN/v1/predict" \\
+  -H "Content-Type: application/json" \\
+  -H "X-API-Key: laya_your_key" \\
+  -d '{"state":{"text":"order never arrived"},"preset":"triage"}'`,
+      },
     ],
   },
   {

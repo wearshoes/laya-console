@@ -47,7 +47,8 @@ Usage charts aggregate completed model calls from the same audit log. Members se
 | `/playground` | signed in | State JSON and presets `triage`, `email`, `guard`, `moderation`, `router` |
 | `/usage` | signed in | Daily request charts |
 | `/keys` | signed in | Create, reveal once (`laya_…`), list masked, revoke |
-| `/docs` | signed in | Overview, quickstart, models, patterns, API, auth, errors, keys, presets, billing, orgs, shares, legal |
+| `/docs` | public | Searchable docs: overview, quickstart, models, patterns, API, auth, errors, keys, presets, billing, orgs, shares, legal |
+| `/settings` | signed in | Display name, language, and light/dark theme |
 | `/billing` | signed in | Credit preview. Amount due is always `0`. No card capture |
 | `/org` | signed in | Members who share an org name, plus invite links |
 | `/shares` | signed in | Preset and state snapshots. Public page is `/s/[token]` |
@@ -64,7 +65,9 @@ English and Simplified Chinese. The switcher is on the login / register panel an
 
 ## Theme, commands, feedback
 
-`laya_theme` is `light` or `dark` and sets `class="dark"` on the document. Press Cmd-K or Ctrl-K to open the command list (pages, theme, language, feedback, sign out). A skip link jumps to the main region.
+`laya_theme` is `light` or `dark` and sets `class="dark"` on the document. The same control is on Settings. `laya_sidebar` is `expanded` or `collapsed`. Press Cmd-K or Ctrl-K to open the command list (pages, theme, language, feedback, sign out). A skip link jumps to the main region.
+
+Documentation at `/docs` can be read without a session. Search filters titles and page text. Playground share asks for a title before it creates a public link. Revoking an API key asks for confirmation. Usage charts filter by outcome, preset, range, and (for admins) account.
 
 The feedback button stores a category and message in SQLite. It does not send the note anywhere else. Admins can read the list on Team. Members who call `GET /api/feedback` receive **403**.
 

@@ -13,6 +13,8 @@ export default function UsagePage() {
   const [scope, setScope] = useState<"own" | "all">("own");
   const [userId, setUserId] = useState("");
   const [range, setRange] = useState<"7" | "30" | "60">("7");
+  const [outcome, setOutcome] = useState<"all" | "ok" | "error">("all");
+  const [preset, setPreset] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -21,8 +23,12 @@ export default function UsagePage() {
     (async () => {
       setLoading(true);
       try {
-        const q = userId ? `?userId=${encodeURIComponent(userId)}` : "";
-        const res = await fetch(`/api/usage${q}`);
+        const params = new URLSearchParams();
+        if (userId) params.set("userId", userId);
+        if (preset) params.set("preset", preset);
+        if (outcome !== "all") params.set("outcome", outcome);
+        const q = params.toString();
+        const res = await fetch(`/api/usage${q ? `?${q}` : ""}`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "generic");
         if (cancelled) return;
@@ -39,7 +45,7 @@ export default function UsagePage() {
     return () => {
       cancelled = true;
     };
-  }, [userId]);
+  }, [userId, preset, outcome]);
 
   const series = useMemo(() => fillDays(days, Number(range)), [days, range]);
   const totalRequests = series.reduce((s, d) => s + Number(d.requests || 0), 0);
@@ -70,8 +76,28 @@ export default function UsagePage() {
           <span className="text-sm text-neutral-500">{t("usage.delayed")}</span>
         </div>
         <div className="flex flex-wrap items-center gap-2 text-sm">
-          <select className="rounded-md border border-neutral-200 bg-white px-2 py-1.5" value="all" disabled>
+          <select
+            className="rounded-md border border-neutral-200 bg-white px-2 py-1.5"
+            value={outcome}
+            onChange={(e) => setOutcome(e.target.value as "all" | "ok" | "error")}
+            aria-label={t("usage.allTraffic")}
+          >
             <option value="all">{t("usage.allTraffic")}</option>
+            <option value="ok">{t("usage.successful")}</option>
+            <option value="error">{t("usage.errors")}</option>
+          </select>
+          <select
+            className="rounded-md border border-neutral-200 bg-white px-2 py-1.5"
+            value={preset}
+            onChange={(e) => setPreset(e.target.value)}
+            aria-label={t("usage.preset")}
+          >
+            <option value="">{t("usage.allPresets")}</option>
+            <option value="triage">triage</option>
+            <option value="email">email</option>
+            <option value="guard">guard</option>
+            <option value="moderation">moderation</option>
+            <option value="router">router</option>
           </select>
           {scope === "all" && (
             <select
@@ -97,9 +123,7 @@ export default function UsagePage() {
             <option value="30">{t("usage.last30")}</option>
             <option value="60">{t("usage.last60")}</option>
           </select>
-          <select className="rounded-md border border-neutral-200 bg-white px-2 py-1.5" value="daily" disabled>
-            <option value="daily">{t("usage.daily")}</option>
-          </select>
+          <span className="rounded-md border border-neutral-200 px-2 py-1.5 text-neutral-600">{t("usage.daily")}</span>
           <button type="button" onClick={exportCsv} className="rounded-md border border-neutral-200 p-2 hover:bg-neutral-50" aria-label={t("usage.export")}>
             <Download />
           </button>
@@ -158,7 +182,11 @@ function ChartBlock({
           const h = (p.value / max) * 140;
           const x = 36 + i * slot + (slot - bar) / 2;
           const y = 152 - h;
-          return <rect key={p.label} x={x} y={y} width={bar} height={Math.max(p.value > 0 ? 2 : 0, h)} rx="1" fill={color} />;
+          return (
+            <rect key={p.label} x={x} y={y} width={bar} height={Math.max(p.value > 0 ? 2 : 0, h)} rx="1" fill={color}>
+              <title>{`${p.label}: ${p.value}`}</title>
+            </rect>
+          );
         })}
       </svg>
       <div className="flex justify-between pl-9 pr-2 text-[11px] text-neutral-400">

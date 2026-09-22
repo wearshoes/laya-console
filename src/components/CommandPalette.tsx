@@ -34,6 +34,7 @@ export function CommandPalette({ role }: { role: Role }) {
       { id: "shares", label: t("nav.shares"), run: go("/shares") },
       { id: "models", label: t("nav.models"), run: go("/models") },
       { id: "docs", label: t("nav.docs"), run: go("/docs") },
+      { id: "settings", label: t("nav.settings"), run: go("/settings") },
     ];
     if (role === "admin") {
       items.push({ id: "audit", label: t("nav.audit"), run: go("/audit") });

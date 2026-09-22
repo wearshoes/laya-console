@@ -25,6 +25,7 @@ export const en = {
     org: "Organization",
     shares: "Shares",
     models: "Models",
+    settings: "Settings",
   },
   common: {
     signOut: "Sign out",
@@ -44,6 +45,8 @@ export const en = {
     skip: "Skip to content",
     commands: "Commands",
     missing: "This page is not in the documentation.",
+    collapseSidebar: "Collapse sidebar",
+    expandSidebar: "Expand sidebar",
   },
   login: {
     welcome: "Welcome to Laya",
@@ -143,6 +146,8 @@ export const en = {
     clear: "Clear",
     share: "Share",
     shared: "Share link copied",
+    shareBody: "The public page shows this preset and state. It never includes an API key.",
+    createLink: "Create link",
     state: "State",
     ready: "No issues blocking Run",
     invalid: "Invalid JSON",
@@ -177,6 +182,9 @@ export const en = {
     title: "Usage",
     delayed: "Stats may be delayed",
     allTraffic: "All traffic",
+    errors: "Errors",
+    allPresets: "All presets",
+    preset: "Preset",
     last7: "Last 7 days",
     last30: "Last 30 days",
     last60: "Last 60 days",
@@ -206,6 +214,7 @@ export const en = {
     revoked: "Revoked",
     revoke: "Revoke",
     revokeConfirm: "Revoke this key?",
+    revokeBody: "Calls that use this secret will be rejected. The secret is not stored, and this cannot be undone.",
     empty: "No keys yet. Create one to call /v1/predict.",
     footer: "API keys are organization-scoped and remain active even after the creator is removed.",
     modalTitle: "Create API key",
@@ -303,6 +312,9 @@ export const en = {
   },
   docs: {
     onThisPage: "On this page",
+    search: "Search docs",
+    noResults: "No matching pages",
+    signIn: "Sign in",
     quickstart: {
       title: "Quickstart",
       lede: "Create an account, mint a console API key, and send a typed decision to Laya.",
@@ -501,6 +513,15 @@ GET /health`
     groupProduct: "Product",
     groupLegal: "Legal",
   },
+  settings: {
+    title: "Settings",
+    lede: "Profile and appearance for this console.",
+    name: "Display name",
+    email: "Email",
+    save: "Save profile",
+    saved: "Saved",
+    themeLede: "Stored in this browser as light or dark. It does not change your account role.",
+  },
 };
 
 export type Dict = typeof en;
@@ -522,6 +543,7 @@ export const zhCN: Dict = {
     org: "组织",
     shares: "分享",
     models: "模型",
+    settings: "设置",
   },
   common: {
     signOut: "退出登录",
@@ -541,6 +563,8 @@ export const zhCN: Dict = {
     skip: "跳到内容",
     commands: "命令",
     missing: "文档里没有这一页。",
+    collapseSidebar: "收起侧栏",
+    expandSidebar: "展开侧栏",
   },
   login: {
     welcome: "欢迎使用 Laya",
@@ -638,6 +662,8 @@ export const zhCN: Dict = {
     clear: "清空",
     share: "分享",
     shared: "分享链接已复制",
+    shareBody: "公开页只显示这份预设和状态，绝不包含 API 密钥。",
+    createLink: "创建链接",
     state: "状态",
     ready: "没有阻止运行的问题",
     invalid: "JSON 无效",
@@ -672,6 +698,9 @@ export const zhCN: Dict = {
     title: "用量",
     delayed: "统计可能有延迟",
     allTraffic: "全部流量",
+    errors: "错误",
+    allPresets: "全部预设",
+    preset: "预设",
     last7: "最近 7 天",
     last30: "最近 30 天",
     last60: "最近 60 天",
@@ -701,6 +730,7 @@ export const zhCN: Dict = {
     revoked: "已吊销",
     revoke: "吊销",
     revokeConfirm: "吊销这把密钥？",
+    revokeBody: "使用该密钥的调用会被拒绝。密钥原文并未保存，此操作不能撤销。",
     empty: "还没有密钥。创建一把之后即可调用 /v1/predict。",
     footer: "API 密钥属于组织，创建者被移除后仍然有效。",
     modalTitle: "创建 API 密钥",
@@ -798,6 +828,9 @@ export const zhCN: Dict = {
   },
   docs: {
     onThisPage: "本页目录",
+    search: "搜索文档",
+    noResults: "没有匹配的页面",
+    signIn: "登录",
     quickstart: {
       title: "快速开始",
       lede: "创建账户，签发控制台 API 密钥，然后向 Laya 发送一次类型化决策。",
@@ -995,6 +1028,15 @@ GET /health`
     groupReference: "参考",
     groupProduct: "产品",
     groupLegal: "法律",
+  },
+  settings: {
+    title: "设置",
+    lede: "本控制台的个人资料和外观。",
+    name: "显示名称",
+    email: "邮箱",
+    save: "保存资料",
+    saved: "已保存",
+    themeLede: "保存在这台浏览器里，分为浅色和深色。不会改变账户角色。",
   },
 };
 

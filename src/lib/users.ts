@@ -166,6 +166,15 @@ export function listUsers(): PublicUser[] {
   }));
 }
 
+export function updateDisplayName(userId: string, name: string): PublicUser | null {
+  const trimmed = name.trim().slice(0, 80);
+  if (!trimmed) return null;
+  const info = getDb().prepare(`UPDATE users SET name = ? WHERE id = ?`).run(trimmed, userId);
+  if (!info.changes) return null;
+  const user = getUser(userId);
+  return user ? toPublic(user) : null;
+}
+
 export function setUserRole(
   targetId: string,
   role: Role
