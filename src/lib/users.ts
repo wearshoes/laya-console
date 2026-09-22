@@ -97,6 +97,7 @@ export function createUser(input: {
   email: string;
   password: string;
   name?: string;
+  org?: string;
 }): { ok: true; user: User } | { ok: false; error: "invalid_email" | "password_short" | "email_taken" } {
   const email = input.email.trim().toLowerCase();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 200) {
@@ -109,6 +110,7 @@ export function createUser(input: {
 
   const derived = displayFromEmail(email);
   const name = (input.name || "").trim().slice(0, 80) || derived.name;
+  const org = (input.org || "").trim().slice(0, 80) || derived.org;
   const role: Role = isAdminEmail(email) ? "admin" : "member";
   const id = uuidv4();
   const password_hash = hashPassword(input.password);
@@ -116,7 +118,7 @@ export function createUser(input: {
     .prepare(
       `INSERT INTO users (id, email, name, org, role, password_hash) VALUES (?, ?, ?, ?, ?, ?)`
     )
-    .run(id, email, name, derived.org, role, password_hash);
+    .run(id, email, name, org, role, password_hash);
   const user = getUser(id);
   if (!user) return { ok: false, error: "invalid_email" };
   return { ok: true, user };

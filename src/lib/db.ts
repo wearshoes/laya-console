@@ -60,10 +60,43 @@ export function getDb(): Database.Database {
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 
+    CREATE TABLE IF NOT EXISTS org_invites (
+      id TEXT PRIMARY KEY,
+      token TEXT NOT NULL UNIQUE,
+      org TEXT NOT NULL,
+      email TEXT NOT NULL,
+      created_by TEXT NOT NULL,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      accepted_at TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS shares (
+      id TEXT PRIMARY KEY,
+      token TEXT NOT NULL UNIQUE,
+      user_id TEXT NOT NULL,
+      org TEXT NOT NULL,
+      title TEXT NOT NULL,
+      preset TEXT,
+      state_json TEXT NOT NULL,
+      revoked INTEGER NOT NULL DEFAULT 0,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS feedback (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id TEXT,
+      email TEXT,
+      category TEXT NOT NULL,
+      message TEXT NOT NULL,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
     CREATE INDEX IF NOT EXISTS idx_keys_hash ON api_keys(key_hash);
     CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_events(created_at);
     CREATE INDEX IF NOT EXISTS idx_audit_user ON audit_events(user_id);
     CREATE INDEX IF NOT EXISTS idx_audit_key ON audit_events(api_key_id);
+    CREATE INDEX IF NOT EXISTS idx_shares_token ON shares(token);
+    CREATE INDEX IF NOT EXISTS idx_invites_token ON org_invites(token);
   `);
 
   if (!hasColumn(db, "users", "role")) {

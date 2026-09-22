@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Role } from "@/lib/users";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { LayaMark } from "./LayaMark";
+import { ThemeToggle } from "./ThemeToggle";
 import { useI18n } from "./LocaleProvider";
 
 export function Sidebar({ name, org, role }: { name: string; org: string; role: Role }) {
@@ -36,6 +37,8 @@ export function Sidebar({ name, org, role }: { name: string; org: string; role: 
     { href: "/usage", label: t("nav.usage"), icon: ChartIcon },
     ...(role === "admin" ? [{ href: "/audit", label: t("nav.audit"), icon: AuditIcon }] : []),
     { href: "/keys", label: t("nav.keys"), icon: KeyIcon },
+    { href: "/billing", label: t("nav.billing"), icon: BillingIcon },
+    { href: "/org", label: t("nav.org"), icon: OrgIcon },
     { href: "/docs", label: t("nav.docs"), icon: BookIcon },
     ...(role === "admin" ? [{ href: "/admin", label: t("nav.team"), icon: TeamIcon }] : []),
   ];
@@ -52,7 +55,7 @@ export function Sidebar({ name, org, role }: { name: string; org: string; role: 
         <LayaMark className="h-6 w-6 text-neutral-950" />
         <span className="text-[13px] font-semibold tracking-[0.16em] text-neutral-950">LAYA</span>
       </div>
-      <nav className="flex flex-1 flex-col gap-0.5 px-2 pt-2">
+      <nav className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-auto px-2 pt-2">
         {items.map((item) => {
           const active = pathname === item.href || pathname.startsWith(item.href + "/");
           const Icon = item.icon;
@@ -72,8 +75,16 @@ export function Sidebar({ name, org, role }: { name: string; org: string; role: 
           );
         })}
       </nav>
-      <div className="px-3 pb-2">
+      <div className="flex flex-wrap items-center gap-2 px-3 pb-2">
         <LanguageSwitcher />
+        <ThemeToggle />
+        <button
+          type="button"
+          className="rounded-full border border-neutral-200 px-2.5 py-1 text-[11px] text-neutral-500 transition hover:bg-neutral-50"
+          onClick={() => window.dispatchEvent(new Event("laya-open-commands"))}
+        >
+          {t("common.commands")}
+        </button>
       </div>
       <div className="relative border-t border-neutral-200 p-3" ref={menuRef}>
         {open && (
@@ -135,6 +146,22 @@ function KeyIcon() {
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <circle cx="8" cy="15" r="3.2" />
       <path d="M11 13.2 20 4.5 21.5 6 18 9.2l1.4 1.3-1.6 1.5" />
+    </svg>
+  );
+}
+function BillingIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <rect x="3" y="6" width="18" height="12" rx="2" />
+      <path d="M3 10h18" />
+    </svg>
+  );
+}
+function OrgIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <path d="M4 20V8l8-4 8 4v12" />
+      <path d="M9 20v-6h6v6" />
     </svg>
   );
 }

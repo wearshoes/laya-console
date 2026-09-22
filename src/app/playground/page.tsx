@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { JsonEditor } from "@/components/JsonEditor";
 import { useI18n } from "@/components/LocaleProvider";
+import { copyText } from "@/lib/copy-text";
 import { DEFAULT_STATE, PRESET_IDS, PRESET_STATES, type PresetId } from "@/lib/prompts";
 
 type ViewMode = "json" | "plain";
 
-export default function PlaygroundPage() {
+function PlaygroundInner() {
   const { t } = useI18n();
   const [stateText, setStateText] = useState(JSON.stringify(DEFAULT_STATE, null, 2));
   const [preset, setPreset] = useState<PresetId>("triage");
@@ -21,6 +23,20 @@ export default function PlaygroundPage() {
   const [stacked, setStacked] = useState(false);
   const [showExamples, setShowExamples] = useState(true);
   const [shared, setShared] = useState(false);
+  const [shareUrl, setShareUrl] = useState("");
+  const params = useSearchParams();
+  const presetOnce = useRef(false);
+
+  useEffect(() => {
+    if (presetOnce.current) return;
+    presetOnce.current = true;
+    const id = params.get("preset");
+    if (id && (PRESET_IDS as readonly string[]).includes(id)) {
+      setPreset(id as PresetId);
+      setUseCustom(false);
+      setStateText(JSON.stringify(PRESET_STATES[id as PresetId], null, 2));
+    }
+  }, [params]);
 
   const stateValid = useMemo(() => {
     try {
@@ -75,12 +91,23 @@ export default function PlaygroundPage() {
   }
 
   async function share() {
-    const payload = useCustom
-      ? { state: JSON.parse(stateText), questions: JSON.parse(custom) }
-      : { state: JSON.parse(stateText), preset };
-    await navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
-    setShared(true);
-    setTimeout(() => setShared(false), 1200);
+    const parsed = JSON.parse(stateText);
+    const body = useCustom
+      ? { title: "Custom questions", preset: null, state: { state: parsed, questions: JSON.parse(custom) } }
+      : { title: preset, preset, state: parsed };
+    const res = await fetch("/api/shares", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.share?.token) {
+      setError(t("errors.generic"));
+      return;
+    }
+    const path = `/s/${data.share.token}`;
+    setShareUrl(path);
+    setShared(await copyText(`${window.location.origin}${path}`));
   }
 
   async function run() {
@@ -130,8 +157,13 @@ export default function PlaygroundPage() {
           disabled={!stateValid || !customValid}
           className="rounded-md border border-neutral-200 px-2.5 py-1 text-xs transition hover:bg-neutral-50 disabled:opacity-40"
         >
-          {shared ? t("common.copied") : t("playground.share")}
+          {shared ? t("playground.shared") : t("playground.share")}
         </button>
+        {shareUrl ? (
+          <Link href={shareUrl} className="max-w-[220px] truncate text-xs text-[#2f6fed]">
+            {shareUrl}
+          </Link>
+        ) : null}
         <div className="ml-auto flex items-center gap-1 rounded-md border border-neutral-200 p-0.5">
           <button
             type="button"
@@ -319,6 +351,14 @@ function Examples({ onPick, onClose }: { onPick: (id: PresetId) => void; onClose
         ))}
       </ul>
     </div>
+  );
+}
+
+export default function PlaygroundPage() {
+  return (
+    <Suspense fallback={null}>
+      <PlaygroundInner />
+    </Suspense>
   );
 }
 

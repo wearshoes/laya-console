@@ -4,8 +4,14 @@ import { RegisterForm } from "./ui";
 
 export const dynamic = "force-dynamic";
 
-export default async function RegisterPage() {
+export default async function RegisterPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ invite?: string }>;
+}) {
   const session = await getSession();
   if (session) redirect("/home");
-  return <RegisterForm />;
+  const params = await searchParams;
+  const invite = typeof params.invite === "string" ? params.invite : "";
+  return <RegisterForm invite={invite} />;
 }

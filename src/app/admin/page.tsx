@@ -12,12 +12,15 @@ type UserRow = {
   created_at: string;
 };
 
+type FeedbackRow = { id: number; email: string; category: string; message: string; created_at: string };
+
 export default function AdminPage() {
   const { t } = useI18n();
   const [users, setUsers] = useState<UserRow[]>([]);
   const [actorId, setActorId] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackRow[]>([]);
 
   async function load() {
     const res = await fetch("/api/admin/users");
@@ -29,6 +32,11 @@ export default function AdminPage() {
     setUsers(data.users || []);
     setActorId(data.actorId || "");
     setError(null);
+    const notes = await fetch("/api/feedback");
+    if (notes.ok) {
+      const body = await notes.json();
+      setFeedback(body.feedback || []);
+    }
   }
 
   useEffect(() => {
@@ -90,6 +98,20 @@ export default function AdminPage() {
           </tbody>
         </table>
       </div>
+      <section className="mt-8">
+        <h2 className="text-base font-semibold">{t("product.feedback")}</h2>
+        <p className="mt-1 text-sm text-neutral-500">{t("product.feedbackLede")}</p>
+        <ul className="mt-3 divide-y divide-neutral-200">
+          {feedback.map((item) => (
+            <li key={item.id} className="py-3 text-sm">
+              <p className="text-xs text-neutral-500">
+                {item.email} · {item.category} · {item.created_at}
+              </p>
+              <p className="mt-1">{item.message}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   );
 }

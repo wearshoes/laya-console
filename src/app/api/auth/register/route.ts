@@ -1,21 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
+import { consumeInvite, peekInvite } from "@/lib/org";
 import { setSessionCookie } from "@/lib/session";
 import { createUser, toPublic } from "@/lib/users";
 
 export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
-  let body: { email?: string; password?: string; name?: string };
+  let body: { email?: string; password?: string; name?: string; invite?: string };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ ok: false, error: "invalid_json" }, { status: 400 });
   }
+  const email = (body.email || "").trim().toLowerCase();
+  const invite = body.invite ? peekInvite(body.invite) : null;
+  const org = invite && invite.email === email ? invite.org : undefined;
   const result = createUser({
     email: body.email || "",
     password: body.password || "",
     name: body.name,
+    org,
   });
+  if (result.ok && invite && org && body.invite) consumeInvite(body.invite, result.user.email);
   if (!result.ok) {
     const status = result.error === "email_taken" ? 409 : 400;
     return NextResponse.json({ ok: false, error: result.error }, { status });

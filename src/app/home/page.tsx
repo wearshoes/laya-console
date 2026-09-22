@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { useI18n } from "@/components/LocaleProvider";
 import { copyText } from "@/lib/copy-text";
+import { HOME_EDITORIAL, tx } from "@/lib/catalog";
 import { LAYA_AGENT_INSTALL_PROMPT } from "@/lib/prompts";
 
 export default function HomePage() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [copied, setCopied] = useState<"ok" | "fail" | null>(null);
 
   async function copyPrompt() {
@@ -54,6 +55,28 @@ export default function HomePage() {
         />
       </section>
 
+      <section className="border-b border-neutral-200 px-8 py-8 lg:px-10">
+        <h2 className="text-[28px] font-semibold tracking-tight">{tx(HOME_EDITORIAL.cookbooksTitle, locale)}</h2>
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
+          {HOME_EDITORIAL.cookbooks.map((item) => (
+            <article key={tx(item.title, "en")} className="card card-hover p-4">
+              <h3 className="text-sm font-semibold">{tx(item.title, locale)}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-neutral-600">{tx(item.body, locale)}</p>
+            </article>
+          ))}
+        </div>
+        <h2 className="mt-8 text-[28px] font-semibold tracking-tight">{tx(HOME_EDITORIAL.demosTitle, locale)}</h2>
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
+          {HOME_EDITORIAL.demos.map((item) => (
+            <Link key={item.preset} href={`/playground?preset=${item.preset}`} className="card card-hover p-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-400">{item.preset}</p>
+              <h3 className="mt-2 text-sm font-semibold">{tx(item.title, locale)}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-neutral-600">{tx(item.body, locale)}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <section className="grid flex-1 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div className="border-b border-neutral-200 px-8 py-8 lg:border-b-0 lg:border-r lg:px-10">
           <h2 className="text-[28px] font-semibold tracking-tight">{t("home.inAction")}</h2>
@@ -82,7 +105,7 @@ export default function HomePage() {
         <aside className="px-6 py-8">
           <div className="flex items-start justify-between gap-3">
             <h2 className="text-[28px] font-semibold tracking-tight">{t("home.quickstart")}</h2>
-            <Link href="/docs" className="pt-2 text-sm text-[#2f6fed] transition hover:underline">
+            <Link href="/docs/quickstart" className="pt-2 text-sm text-[#2f6fed] transition hover:underline">
               {t("home.agentSetup")} ↗
             </Link>
           </div>
@@ -91,7 +114,7 @@ export default function HomePage() {
             {copied === "ok" ? t("common.copied") : copied === "fail" ? t("common.copyFailed") : t("home.copyPrompt")}
           </button>
           <Link
-            href="/docs"
+            href="/docs/quickstart"
             className="mt-4 flex items-center justify-between rounded-lg border border-neutral-200 px-3 py-3 text-sm shadow-sm transition hover:border-neutral-300 hover:shadow"
           >
             <span className="font-medium text-[#2f6fed]">{t("home.skill")}</span>

@@ -47,9 +47,13 @@ Usage charts aggregate completed model calls from the same audit log. Members se
 | `/playground` | signed in | State JSON and presets `triage`, `email`, `guard`, `moderation`, `router` |
 | `/usage` | signed in | Daily request charts |
 | `/keys` | signed in | Create, reveal once (`laya_…`), list masked, revoke |
-| `/docs` | signed in | Quickstart, API reference, keys, presets |
+| `/docs` | signed in | Overview, quickstart, models, patterns, API, auth, errors, keys, presets, billing, orgs, shares, legal |
+| `/billing` | signed in | Credit preview. Amount due is always `0`. No card capture |
+| `/org` | signed in | Members who share an org name, plus invite links |
+| `/shares` | signed in | Preset and state snapshots. Public page is `/s/[token]` |
+| `/models` | signed in | `laya-latest` decision runtime |
 | `/audit` | admin | Filterable request trail |
-| `/admin` | admin | Change `member` / `admin` |
+| `/admin` | admin | Change `member` / `admin`, and read saved feedback |
 | `/legal/terms`, `/legal/privacy`, `/legal/trust` | public | Short policy notes |
 
 Documentation in the sidebar opens `/docs`. The GitHub skill repo is mentioned only inside the quickstart as an optional install path.
@@ -57,6 +61,20 @@ Documentation in the sidebar opens `/docs`. The GitHub skill repo is mentioned o
 ## Languages
 
 English and Simplified Chinese. The switcher is on the login / register panel and in the sidebar. The choice is stored in the `laya_lang` cookie (`en` or `zh-CN`). With no cookie, `Accept-Language` containing `zh` selects Chinese.
+
+## Theme, commands, feedback
+
+`laya_theme` is `light` or `dark` and sets `class="dark"` on the document. Press Cmd-K or Ctrl-K to open the command list (pages, theme, language, feedback, sign out). A skip link jumps to the main region.
+
+The feedback button stores a category and message in SQLite. It does not send the note anywhere else. Admins can read the list on Team. Members who call `GET /api/feedback` receive **403**.
+
+## Billing, organizations, shares
+
+Billing is a non-charging stub. `GET /api/billing` reports `charging: false`, `amountDue: 0`, and `usedCredits: 0`. `POST /api/billing/topup` returns **501** `payments_disabled`. There is no payment processor and no card form.
+
+An organization is the `org` string on a user. Inviting someone creates a token and a register link (`/register?invite=…`). The invite is applied only when that email registers. The console does not send mail.
+
+A share stores a title, optional preset, and state JSON. The public page shows that JSON only. API keys are not included. Revoking a share hides the public page.
 
 ## Setup
 
@@ -115,6 +133,6 @@ Copy `.env.local.example` to `.env.local`. Do not commit `.env.local`, the datab
 
 ## Data
 
-SQLite tables: `users` (including `role` and `password_hash`), `api_keys` (`key_hash`, `key_prefix`), `audit_events`.
+SQLite tables: `users` (including `role` and `password_hash`), `api_keys` (`key_hash`, `key_prefix`), `audit_events`, `org_invites`, `shares`, `feedback`.
 
 Display names: an email whose local part contains `hao` or `wei` is shown as **hao wei** / **hao's org** unless a name was entered at registration.

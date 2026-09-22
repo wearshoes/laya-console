@@ -20,8 +20,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const jar = await cookies();
   const headerList = await headers();
   const locale = resolveLocale(jar.get("laya_lang")?.value, headerList.get("accept-language"));
+  const theme = jar.get("laya_theme")?.value === "dark" ? "dark" : "light";
   return (
-    <html lang={locale === "zh-CN" ? "zh-CN" : "en"}>
+    <html lang={locale === "zh-CN" ? "zh-CN" : "en"} className={theme === "dark" ? "dark" : undefined}>
       <body>
         <LocaleProvider initial={locale}>{children}</LocaleProvider>
       </body>

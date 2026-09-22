@@ -7,7 +7,7 @@ import { AuthSplit } from "@/components/AuthSplit";
 import { LayaMark } from "@/components/LayaMark";
 import { useI18n } from "@/components/LocaleProvider";
 
-export function RegisterForm() {
+export function RegisterForm({ invite = "" }: { invite?: string }) {
   const router = useRouter();
   const { t } = useI18n();
   const [name, setName] = useState("");
@@ -29,7 +29,7 @@ export function RegisterForm() {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify({ email, password, name, invite: invite || undefined }),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {
@@ -53,6 +53,7 @@ export function RegisterForm() {
           {t("register.title")}
         </h1>
         <p className="mb-1 text-center text-xs leading-relaxed text-neutral-500">{t("register.hint")}</p>
+        {invite ? <p className="mb-1 text-center text-xs leading-relaxed text-neutral-500">{t("register.inviteNote")}</p> : null}
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
