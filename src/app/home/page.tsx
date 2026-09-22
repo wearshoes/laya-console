@@ -6,6 +6,7 @@ import { useI18n } from "@/components/LocaleProvider";
 import { copyText } from "@/lib/copy-text";
 import { HOME_EDITORIAL, tx } from "@/lib/catalog";
 import { LAYA_AGENT_INSTALL_PROMPT, SKILL_MD_URL } from "@/lib/prompts";
+import { HomeUsageCard } from "@/components/HomeUsageCard";
 import styles from "./home.module.css";
 
 export default function HomePage() {
@@ -119,6 +120,7 @@ export default function HomePage() {
           </section>
 
           <div className={styles.secondary}>
+            <HomeUsageCard />
             <nav className={styles.accountNav} aria-label={t("home.docs")}>
               <Link href="/keys">
                 <KeyIcon />
@@ -129,9 +131,6 @@ export default function HomePage() {
                 {t("home.docs")}
               </Link>
             </nav>
-            <div className={styles.usageHidden} aria-hidden>
-              {t("nav.usage")}
-            </div>
           </div>
         </aside>
 

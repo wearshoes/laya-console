@@ -111,7 +111,7 @@
   flex: 1 1 auto;
   min-width: 0;
   background-color: #000;
-  opacity: 0.4;
+  opacity: 0.6;
   background-image: url("/assets/launchpad/launchpad-banner.png");
   background-position: 0 0;
   background-repeat: repeat-x;
@@ -280,10 +280,16 @@
   flex-direction: column;
 }
 
+.usageHidden {
+  display: none;
+}
+
 .accountNav {
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-width: 0;
+  height: 6rem;
+  min-height: 6rem;
   border-top: 1px solid #e7e7e7;
 }
 
@@ -310,10 +316,6 @@
 
 .accountNav a:hover {
   background: rgba(0, 0, 0, 0.03);
-}
-
-.usageHidden {
-  display: none;
 }
 
 .inAction {
@@ -711,16 +713,17 @@
     min-height: 0;
   }
 
-  /* Pin API key / Documentation to rail bottom, flush with utilities row */
+  /* Pin secondary to rail foot; accountNav stays 6rem beside utilities */
   .secondary {
     flex: 0 0 auto;
-    height: 6rem;
-    min-height: 6rem;
+    height: auto;
+    min-height: 0;
     margin-top: auto;
   }
 
   .accountNav {
-    height: 100%;
+    height: 6rem;
+    min-height: 6rem;
     grid-template-columns: 1fr 1fr;
   }
 

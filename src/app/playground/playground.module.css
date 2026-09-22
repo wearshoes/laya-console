@@ -1,0 +1,390 @@
+.page {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  background: #fff;
+  color: #0a0a0a;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid #e7e7e7;
+  padding: 0.5rem 0.75rem;
+}
+
+.toolbarTitle {
+  margin-right: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.toolBtn {
+  border: 1px solid #e7e7e7;
+  border-radius: 0.375rem;
+  background: #fff;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  transition: background 0.12s;
+}
+
+.toolBtn:hover:not(:disabled) {
+  background: #fafafa;
+}
+
+.toolBtn:disabled {
+  opacity: 0.4;
+}
+
+.toolBtnActive {
+  background: #f5f5f5;
+}
+
+.workspace {
+  display: grid;
+  min-height: 0;
+  flex: 1 1 auto;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 64rem) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.editor {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+@media (min-width: 64rem) {
+  .editor {
+    border-bottom: 0;
+    border-right: 1px solid #e7e7e7;
+  }
+}
+
+.panel {
+  border-bottom: 1px solid #e7e7e7;
+  padding: 0.875rem 1rem;
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.panelTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.statusOk {
+  color: #059669;
+  font-size: 0.75rem;
+}
+
+.statusBad {
+  color: #dc2626;
+  font-size: 0.75rem;
+}
+
+.questions {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 0.875rem 1rem;
+}
+
+.presetList {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.presetCard {
+  width: 100%;
+  border: 1px solid #e7e7e7;
+  border-radius: 0.75rem;
+  background: #fff;
+  padding: 0.75rem;
+  text-align: left;
+  transition: border-color 0.12s, background 0.12s;
+}
+
+.presetCard:hover {
+  border-color: #d4d4d4;
+  background: #fafafa;
+}
+
+.presetCardActive {
+  border-color: #0a0a0a;
+  background: #fafafa;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.presetLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.presetBlurb {
+  margin-top: 0.25rem;
+  color: #737373;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.runBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-top: 1px solid #f5f5f5;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+.runtimePill {
+  border: 1px solid #e7e7e7;
+  border-radius: 999px;
+  background: #fafafa;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.runBtn {
+  margin-left: auto;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: #0a0a0a;
+  padding: 0 1rem;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.runBtn:disabled {
+  background: #f5f5f5;
+  color: #a3a3a3;
+}
+
+.right {
+  display: flex;
+  min-height: 20rem;
+  flex-direction: column;
+  background: #fafafa;
+}
+
+.examples {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.examplesHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 0;
+}
+
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #737373;
+}
+
+.examplesTitle {
+  margin-top: 0.5rem;
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.sectionLabel {
+  padding: 1.5rem 1.5rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+}
+
+.walkGrid {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 40rem) {
+  .walkGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.walkCard {
+  overflow: hidden;
+  border: 1px solid #e7e7e7;
+  border-radius: 0.75rem;
+  background: #fff;
+  text-align: left;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+
+.walkCard:hover {
+  border-color: #d4d4d4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.walkArt {
+  height: 5.5rem;
+  background:
+    radial-gradient(circle at 30% 20%, #d7fff1, transparent 45%),
+    radial-gradient(circle at 80% 0%, #d9e4ff, transparent 40%),
+    linear-gradient(160deg, #f7f7f8, #fff);
+}
+
+.walkBody {
+  padding: 0.75rem;
+}
+
+.walkKicker {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+}
+
+.walkExample {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.walkHint {
+  margin-top: 0.25rem;
+  color: #737373;
+  font-size: 0.75rem;
+}
+
+.caseList {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.5rem 2rem;
+}
+
+.caseList li + li {
+  border-top: 1px solid #e7e7e7;
+}
+
+.caseBtn {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  text-align: left;
+}
+
+.caseBtn:hover {
+  background: #fff;
+}
+
+.caseLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.caseText {
+  color: #737373;
+  font-size: 0.875rem;
+}
+
+.responseHead {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid #e7e7e7;
+  background: #fff;
+  padding: 0.75rem 1rem;
+}
+
+.responseBody {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.answerGrid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.answerCard {
+  border: 1px solid #e7e7e7;
+  border-radius: 0.75rem;
+  background: #fff;
+  padding: 1rem;
+}
+
+.answerKey {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.answerValue {
+  margin-top: 0.5rem;
+  overflow: auto;
+  color: #404040;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.linkBlue {
+  color: #2f6fed;
+  font-size: 0.875rem;
+}
+
+.customArea {
+  height: 12rem;
+  width: 100%;
+  border: 1px solid #e7e7e7;
+  border-radius: 0.5rem;
+  background: #fafafa;
+  padding: 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  outline: none;
+}
+
+.customArea:focus {
+  border-color: #a3a3a3;
+}

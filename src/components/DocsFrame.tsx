@@ -8,16 +8,17 @@ import { useI18n } from "./LocaleProvider";
 
 type Group = "start" | "reference" | "product" | "legal";
 
+/** In-console docs IA aligned to a Jev-style docs shell, Laya content only. */
 const ORDER: { group: Group; href: string; id: string; source: "catalog" | "i18n" }[] = [
   { group: "start", href: "/docs", id: "overview", source: "catalog" },
   { group: "start", href: "/docs/quickstart", id: "quickstart", source: "i18n" },
-  { group: "start", href: "/docs/models", id: "models", source: "catalog" },
   { group: "start", href: "/docs/patterns", id: "patterns", source: "catalog" },
   { group: "reference", href: "/docs/api", id: "api", source: "i18n" },
+  { group: "reference", href: "/docs/presets", id: "presets", source: "i18n" },
+  { group: "reference", href: "/docs/keys", id: "keys", source: "i18n" },
   { group: "reference", href: "/docs/authn", id: "authn", source: "catalog" },
   { group: "reference", href: "/docs/errors", id: "errors", source: "catalog" },
-  { group: "reference", href: "/docs/keys", id: "keys", source: "i18n" },
-  { group: "reference", href: "/docs/presets", id: "presets", source: "i18n" },
+  { group: "product", href: "/docs/models", id: "models", source: "catalog" },
   { group: "product", href: "/docs/billing", id: "billing", source: "catalog" },
   { group: "product", href: "/docs/orgs", id: "orgs", source: "catalog" },
   { group: "product", href: "/docs/shares", id: "shares", source: "catalog" },
@@ -66,7 +67,6 @@ export function DocsFrame({ slug }: { slug: string }) {
   const q = query.trim().toLowerCase();
   const visible = useMemo(
     () => ORDER.filter((item) => !q || blobFor(item).toLowerCase().includes(q)),
-    // blobFor closes over locale and dict, which change with language.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [q, locale, dict]
   );
@@ -78,7 +78,7 @@ export function DocsFrame({ slug }: { slug: string }) {
       : [];
 
   return (
-    <div className="flex h-full min-h-0 flex-col md:flex-row">
+    <div className="flex h-full min-h-0 flex-col bg-white md:flex-row">
       <div className="border-b border-neutral-200 p-3 md:hidden">
         <label className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
           {t("docs.search")}
@@ -87,6 +87,7 @@ export function DocsFrame({ slug }: { slug: string }) {
             onChange={(e) => setQuery(e.target.value)}
             className="field mt-2 h-10"
             placeholder={t("docs.search")}
+            type="search"
           />
         </label>
         <label className="mt-3 block text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
@@ -100,13 +101,17 @@ export function DocsFrame({ slug }: { slug: string }) {
           </select>
         </label>
       </div>
-      <nav className="hidden w-60 shrink-0 flex-col gap-4 overflow-auto border-r border-neutral-200 p-4 md:flex" aria-label={t("nav.docs")}>
-        <label className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
+
+      <nav
+        className="hidden w-[15.5rem] shrink-0 flex-col gap-5 overflow-auto border-r border-neutral-200 bg-[#fafafa] px-3 py-5 md:flex"
+        aria-label={t("nav.docs")}
+      >
+        <label className="px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
           {t("docs.search")}
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="field mt-2 h-10"
+            className="mt-2 h-9 w-full rounded-md border border-neutral-200 bg-white px-2.5 text-sm outline-none focus:border-neutral-400"
             placeholder={t("docs.search")}
             type="search"
           />
@@ -117,7 +122,7 @@ export function DocsFrame({ slug }: { slug: string }) {
           if (!items.length) return null;
           return (
             <div key={group}>
-              <p className="px-2 pb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
+              <p className="px-2 pb-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
                 {t(`product.group${group[0].toUpperCase()}${group.slice(1)}`)}
               </p>
               <div className="flex flex-col gap-0.5">
@@ -128,8 +133,10 @@ export function DocsFrame({ slug }: { slug: string }) {
                       key={item.href}
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`rounded-lg px-3 py-2 text-sm transition ${
-                        active ? "bg-neutral-100 font-medium text-neutral-950" : "text-neutral-600 hover:bg-neutral-50"
+                      className={`rounded-md px-2.5 py-1.5 text-sm transition ${
+                        active
+                          ? "bg-white font-medium text-neutral-950 shadow-sm ring-1 ring-neutral-200"
+                          : "text-neutral-600 hover:bg-white/70 hover:text-neutral-950"
                       }`}
                     >
                       {labelFor(item)}
@@ -141,46 +148,43 @@ export function DocsFrame({ slug }: { slug: string }) {
           );
         })}
       </nav>
-      <article className="min-h-0 flex-1 overflow-auto px-6 py-8 md:px-10">
+
+      <div className="flex min-h-0 min-w-0 flex-1">
+        <article className="min-h-0 flex-1 overflow-auto px-6 py-8 md:px-10 lg:px-12">
+          {catalog ? (
+            <CatalogBody page={catalog} kicker={t("nav.docs")} />
+          ) : i18nPage ? (
+            <Prose
+              kicker={t("nav.docs")}
+              title={i18nPage.title}
+              lede={i18nPage.lede}
+              blocks={i18nPage.blocks.map((block) => ({
+                id: anchor(block.h),
+                h: block.h,
+                p: block.p,
+                code: block.code,
+              }))}
+            />
+          ) : (
+            <p className="text-sm text-neutral-600">{t("common.missing")}</p>
+          )}
+        </article>
+
         {headings.length > 0 && (
-          <nav className="mb-6 max-w-3xl" aria-label={t("docs.onThisPage")}>
+          <aside className="hidden w-48 shrink-0 overflow-auto border-l border-neutral-100 px-4 py-8 xl:block" aria-label={t("docs.onThisPage")}>
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">{t("docs.onThisPage")}</p>
-            <ul className="mt-2 flex flex-wrap gap-2">
+            <ul className="mt-3 space-y-2">
               {headings.map((heading) => (
                 <li key={heading}>
-                  <a href={`#${anchor(heading)}`} className="rounded-full border border-neutral-200 px-3 py-1 text-xs text-neutral-600 hover:bg-neutral-50">
+                  <a href={`#${anchor(heading)}`} className="block text-xs leading-snug text-neutral-500 hover:text-neutral-900">
                     {heading}
                   </a>
                 </li>
               ))}
             </ul>
-          </nav>
+          </aside>
         )}
-        {catalog ? (
-          <CatalogBody page={catalog} kicker={t("nav.docs")} />
-        ) : i18nPage ? (
-          <>
-            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-neutral-400">{t("nav.docs")}</p>
-            <h1 className="mt-2 text-4xl font-semibold tracking-tight">{i18nPage.title}</h1>
-            <p className="mt-3 max-w-2xl text-base leading-relaxed text-neutral-600">{i18nPage.lede}</p>
-            <div className="mt-8 max-w-3xl space-y-8">
-              {i18nPage.blocks.map((block) => (
-                <section key={block.h} id={anchor(block.h)} className="card scroll-mt-6 p-5">
-                  <h2 className="text-lg font-semibold">{block.h}</h2>
-                  <p className="mt-2 text-sm leading-relaxed text-neutral-600">{block.p}</p>
-                  {block.code ? (
-                    <pre className="mt-4 overflow-auto rounded-lg bg-neutral-950 p-4 font-mono text-xs leading-relaxed text-neutral-100">
-                      {block.code}
-                    </pre>
-                  ) : null}
-                </section>
-              ))}
-            </div>
-          </>
-        ) : (
-          <p className="text-sm text-neutral-600">{t("common.missing")}</p>
-        )}
-      </article>
+      </div>
     </div>
   );
 }
@@ -188,23 +192,49 @@ export function DocsFrame({ slug }: { slug: string }) {
 function CatalogBody({ page, kicker }: { page: DocPage; kicker: string }) {
   const { locale } = useI18n();
   return (
-    <>
+    <Prose
+      kicker={kicker}
+      title={tx(page.title, locale)}
+      lede={tx(page.lede, locale)}
+      blocks={page.blocks.map((block) => ({
+        id: anchor(tx(block.h, locale)),
+        h: tx(block.h, locale),
+        p: tx(block.p, locale),
+        code: block.code || "",
+      }))}
+    />
+  );
+}
+
+function Prose({
+  kicker,
+  title,
+  lede,
+  blocks,
+}: {
+  kicker: string;
+  title: string;
+  lede: string;
+  blocks: { id: string; h: string; p: string; code: string }[];
+}) {
+  return (
+    <div className="mx-auto max-w-3xl">
       <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-neutral-400">{kicker}</p>
-      <h1 className="mt-2 text-4xl font-semibold tracking-tight">{tx(page.title, locale)}</h1>
-      <p className="mt-3 max-w-2xl text-base leading-relaxed text-neutral-600">{tx(page.lede, locale)}</p>
-      <div className="mt-8 max-w-3xl space-y-8">
-        {page.blocks.map((block) => (
-          <section key={tx(block.h, "en")} id={anchor(tx(block.h, locale))} className="card scroll-mt-6 p-5">
-            <h2 className="text-lg font-semibold">{tx(block.h, locale)}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-neutral-600">{tx(block.p, locale)}</p>
+      <h1 className="mt-2 text-4xl font-semibold tracking-tight text-neutral-950">{title}</h1>
+      <p className="mt-3 text-base leading-relaxed text-neutral-600">{lede}</p>
+      <div className="mt-10 space-y-10">
+        {blocks.map((block) => (
+          <section key={block.id} id={block.id} className="scroll-mt-8">
+            <h2 className="text-xl font-semibold tracking-tight text-neutral-950">{block.h}</h2>
+            <p className="mt-3 text-[15px] leading-7 text-neutral-600">{block.p}</p>
             {block.code ? (
-              <pre className="mt-4 overflow-auto rounded-lg bg-neutral-950 p-4 font-mono text-xs leading-relaxed text-neutral-100">
+              <pre className="mt-4 overflow-auto rounded-lg border border-neutral-200 bg-neutral-950 p-4 font-mono text-[12px] leading-relaxed text-neutral-100">
                 {block.code}
               </pre>
             ) : null}
           </section>
         ))}
       </div>
-    </>
+    </div>
   );
 }

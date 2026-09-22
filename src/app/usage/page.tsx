@@ -68,11 +68,11 @@ export default function UsagePage() {
   const fmt = new Intl.NumberFormat(locale === "zh-CN" ? "zh-CN" : "en-US");
 
   return (
-    <div className="h-full overflow-auto px-6 py-5 md:px-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="h-full overflow-auto bg-white px-6 py-5 md:px-8">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-100 pb-4">
         <div className="flex items-center gap-2">
           <ChartIcon />
-          <h1 className="text-lg font-semibold">{t("usage.title")}</h1>
+          <h1 className="text-lg font-semibold tracking-tight">{t("usage.title")}</h1>
           <span className="text-sm text-neutral-500">{t("usage.delayed")}</span>
         </div>
         <div className="flex flex-wrap items-center gap-2 text-sm">
