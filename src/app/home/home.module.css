@@ -779,14 +779,34 @@
 
 :global(html.dark) .artwork,
 :global(html.dark) .mobileArt {
-  filter: invert(1) hue-rotate(180deg);
+  /* Keep the accepted triptych. Do not invert the banner. */
+  filter: none;
+}
+
+:global(html.dark) .cookbook {
+  color: #a1a1aa;
+}
+
+:global(html.dark) .cookbook:hover,
+:global(html.dark) .cookbook:focus-visible {
+  color: #f4f4f5;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+:global(html.dark) .cookbookTitle {
+  color: #f4f4f5;
+}
+
+:global(html.dark) .cookbookBody {
+  color: #c4c4cc;
 }
 
 :global(html.dark) .demo {
-  background: #1c1b19;
+  background: #f4f1ea;
+  color: #171717;
 }
 
 :global(html.dark) .demoArtWide img,
 :global(html.dark) .demoArtCompact img {
-  filter: invert(1);
+  filter: none;
 }
