@@ -339,9 +339,9 @@ function Examples({ onPick }: { onPick: (id: PresetId) => void }) {
       </div>
       <p className={styles.sectionLabel}>{t("playground.walkthrough")}</p>
       <div className={styles.walkGrid}>
-        {cards.map((id) => (
+        {cards.map((id, index) => (
           <button key={id} type="button" onClick={() => onPick(id)} className={styles.walkCard}>
-            <div className={styles.walkArt} />
+            <div className={`${styles.walkArt} ${styles[`walkArt${index + 1}` as "walkArt1" | "walkArt2" | "walkArt3"]}`} />
             <div className={styles.walkBody}>
               <p className={styles.walkKicker}>{t(`presets.${id}.label`)}</p>
               <p className={styles.walkExample}>{t(`presets.${id}.example`)}</p>

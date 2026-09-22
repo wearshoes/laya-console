@@ -469,6 +469,31 @@ GET /health`
         ),
       ],
     },
+    skill: {
+      title: "Skill",
+      lede: "Optional agent skill for Wearglass Laya. The console API works without it.",
+      blocks: [
+        block(
+          "What the skill does",
+          "The Laya skill teaches coding agents how to call this console with typed state and presets. It does not replace API keys or the playground."
+        ),
+        block(
+          "Install",
+          "Use one install path. Claude Code: claude plugin marketplace add wearshoes/laya-skills, then claude plugin install laya-ai@wearshoes/laya-skills. Other agents: npx skills add wearshoes/laya-skills --skill laya-ai.",
+          `npx skills add wearshoes/laya-skills --skill laya-ai`
+        ),
+        block(
+          "Read the skill",
+          "SKILL.md lives in the public skill repository. Point agents at it when you want them to draft predict calls against this console.",
+          `https://github.com/wearshoes/laya-skills
+https://github.com/wearshoes/wearglass-skills/blob/main/skills/laya-ai/SKILL.md`
+        ),
+        block(
+          "Runtime pairing",
+          "Set LAYA_API_KEY to a console key from API Keys. Prefer this console origin for predict so audit and usage stay in one place."
+        ),
+      ],
+    },
   },
   product: {
     billingTitle: "Billing",
@@ -989,6 +1014,31 @@ GET /health`
   },
   "preset": "router"
 }`
+        ),
+      ],
+    },
+    skill: {
+      title: "技能",
+      lede: "可选的 Wearglass Laya 代理技能。不用它也能使用控制台 API。",
+      blocks: [
+        block(
+          "技能做什么",
+          "Laya 技能教编码代理如何用类型化 state 和预设调用本控制台。它不能替代 API 密钥或试验场。"
+        ),
+        block(
+          "安装",
+          "只用一种安装路径。Claude Code：claude plugin marketplace add wearshoes/laya-skills，然后 claude plugin install laya-ai@wearshoes/laya-skills。其他代理：npx skills add wearshoes/laya-skills --skill laya-ai。",
+          `npx skills add wearshoes/laya-skills --skill laya-ai`
+        ),
+        block(
+          "阅读技能",
+          "SKILL.md 在公开技能仓库中。需要代理起草对本控制台的 predict 调用时，把仓库指给它。",
+          `https://github.com/wearshoes/laya-skills
+https://github.com/wearshoes/wearglass-skills/blob/main/skills/laya-ai/SKILL.md`
+        ),
+        block(
+          "与运行时配对",
+          "把 LAYA_API_KEY 设为 API 密钥页签发的控制台密钥。优先用本控制台的 origin 调用 predict，这样审计和用量会留在同一处。"
         ),
       ],
     },

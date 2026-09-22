@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useI18n } from "@/components/LocaleProvider";
+import styles from "../console-page.module.css";
 
 type DayRow = { day: string; requests: number; ok: number; avg_latency_ms: number | null };
 type Account = { id: string; email: string; name: string; org: string };
@@ -68,16 +69,16 @@ export default function UsagePage() {
   const fmt = new Intl.NumberFormat(locale === "zh-CN" ? "zh-CN" : "en-US");
 
   return (
-    <div className="h-full overflow-auto bg-white px-6 py-5 md:px-8">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-100 pb-4">
-        <div className="flex items-center gap-2">
+    <div className={styles.page}>
+      <div className={styles.head}>
+        <div className={styles.titleRow}>
           <ChartIcon />
-          <h1 className="text-lg font-semibold tracking-tight">{t("usage.title")}</h1>
+          <h1 className={styles.title}>{t("usage.title")}</h1>
           <span className="text-sm text-neutral-500">{t("usage.delayed")}</span>
         </div>
-        <div className="flex flex-wrap items-center gap-2 text-sm">
+        <div className={styles.filters}>
           <select
-            className="rounded-md border border-neutral-200 bg-white px-2 py-1.5"
+            className={styles.select}
             value={outcome}
             onChange={(e) => setOutcome(e.target.value as "all" | "ok" | "error")}
             aria-label={t("usage.allTraffic")}
@@ -87,7 +88,7 @@ export default function UsagePage() {
             <option value="error">{t("usage.errors")}</option>
           </select>
           <select
-            className="rounded-md border border-neutral-200 bg-white px-2 py-1.5"
+            className={styles.select}
             value={preset}
             onChange={(e) => setPreset(e.target.value)}
             aria-label={t("usage.preset")}
@@ -101,7 +102,7 @@ export default function UsagePage() {
           </select>
           {scope === "all" && (
             <select
-              className="rounded-md border border-neutral-200 bg-white px-2 py-1.5"
+              className={styles.select}
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
               aria-label={t("usage.account")}
@@ -115,7 +116,7 @@ export default function UsagePage() {
             </select>
           )}
           <select
-            className="rounded-md border border-neutral-200 bg-white px-2 py-1.5"
+            className={styles.select}
             value={range}
             onChange={(e) => setRange(e.target.value as "7" | "30" | "60")}
           >
@@ -123,13 +124,13 @@ export default function UsagePage() {
             <option value="30">{t("usage.last30")}</option>
             <option value="60">{t("usage.last60")}</option>
           </select>
-          <span className="rounded-md border border-neutral-200 px-2 py-1.5 text-neutral-600">{t("usage.daily")}</span>
+          <span className={styles.select}>{t("usage.daily")}</span>
           <button type="button" onClick={exportCsv} className="rounded-md border border-neutral-200 p-2 hover:bg-neutral-50" aria-label={t("usage.export")}>
             <Download />
           </button>
         </div>
       </div>
-      <p className="mt-2 text-xs text-neutral-500">
+      <p className={styles.hint}>
         {scope === "all" ? t("usage.scopeAll") : t("usage.scopeOwn")} · {t("usage.sqlite")}
       </p>
       {error && <p className="mt-3 text-sm text-red-600">{t(`errors.${error}`)}</p>}

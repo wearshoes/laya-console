@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useI18n } from "@/components/LocaleProvider";
+import styles from "../console-page.module.css";
 
 export default function SettingsPage() {
   const { t } = useI18n();
@@ -48,32 +49,37 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="h-full overflow-auto px-6 py-8 md:px-10">
-      <h1 className="text-3xl font-semibold tracking-tight">{t("settings.title")}</h1>
-      <p className="mt-2 max-w-xl text-sm text-neutral-600">{t("settings.lede")}</p>
+    <div className={styles.page}>
+      <p className={styles.kicker}>{t("nav.settings")}</p>
+      <h1 className={styles.titleLg}>{t("settings.title")}</h1>
+      <p className={styles.lede}>{t("settings.lede")}</p>
       {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
-      <form onSubmit={onSubmit} className="card mt-6 max-w-xl space-y-4 p-5">
-        <label className="block text-sm">
-          <span className="font-medium">{t("settings.name")}</span>
+
+      <form onSubmit={onSubmit} className={`${styles.panel} ${styles.panelPad} ${styles.stack}`}>
+        <label className={styles.fieldLabel}>
+          {t("settings.name")}
           <input value={name} onChange={(e) => setName(e.target.value)} required className="field mt-1" />
         </label>
-        <label className="block text-sm">
-          <span className="font-medium">{t("settings.email")}</span>
+        <label className={styles.fieldLabel}>
+          {t("settings.email")}
           <input value={email} readOnly className="field mt-1 text-neutral-500" />
         </label>
         <p className="text-sm text-neutral-600">
           {org} · {role === "admin" ? t("common.admin") : t("common.member")}
         </p>
-        <div className="flex items-center gap-3">
+        <div>
           <button type="submit" className="btn-black h-10 px-4 text-sm">
             {saved ? t("settings.saved") : t("settings.save")}
           </button>
         </div>
       </form>
-      <section className="card mt-4 max-w-xl p-5">
-        <h2 className="text-base font-semibold">{t("common.theme")}</h2>
-        <p className="mt-1 text-sm text-neutral-600">{t("settings.themeLede")}</p>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
+
+      <section className={`${styles.panel} ${styles.panelPad} ${styles.stack}`} style={{ marginTop: "1rem" }}>
+        <div>
+          <h2 className={styles.sectionTitle}>{t("common.theme")}</h2>
+          <p className={styles.muted}>{t("settings.themeLede")}</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
           <ThemeToggle />
           <LanguageSwitcher />
         </div>

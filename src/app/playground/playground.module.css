@@ -267,6 +267,27 @@
     linear-gradient(160deg, #f7f7f8, #fff);
 }
 
+.walkArt1 {
+  background:
+    radial-gradient(circle at 20% 30%, #ffe08a, transparent 42%),
+    radial-gradient(circle at 85% 10%, #9dffc8, transparent 45%),
+    linear-gradient(145deg, #fff7d6, #f4fff8);
+}
+
+.walkArt2 {
+  background:
+    radial-gradient(circle at 15% 80%, #b7f0ff, transparent 40%),
+    radial-gradient(circle at 70% 20%, #c7b7ff, transparent 48%),
+    linear-gradient(160deg, #eef8ff, #f6f1ff);
+}
+
+.walkArt3 {
+  background:
+    radial-gradient(circle at 25% 20%, #ffd0b8, transparent 45%),
+    radial-gradient(circle at 90% 60%, #a8e0ff, transparent 42%),
+    linear-gradient(150deg, #fff1ea, #eef8ff);
+}
+
 .walkBody {
   padding: 0.75rem;
 }

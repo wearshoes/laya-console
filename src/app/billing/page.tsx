@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useI18n } from "@/components/LocaleProvider";
+import styles from "../console-page.module.css";
 
 type Billing = {
   charging: boolean;
@@ -30,40 +31,47 @@ export default function BillingPage() {
   }
 
   return (
-    <div className="h-full overflow-auto px-6 py-8 md:px-10">
-      <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-neutral-400">{t("product.notBilled")}</p>
-      <h1 className="mt-2 text-3xl font-semibold tracking-tight">{t("product.billingTitle")}</h1>
-      <p className="mt-2 max-w-2xl text-sm text-neutral-600">{t("product.billingLede")}</p>
-      <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat label={t("product.plan")} value={t("product.planName")} />
-        <Stat label={t("product.amountDue")} value={`$${(data?.amountDue ?? 0).toFixed(2)}`} />
-        <Stat label={t("product.credits")} value={String(data?.includedCredits ?? 10000)} />
-        <Stat label={t("product.used")} value={String(data?.usedCredits ?? 0)} />
+    <div className={styles.page}>
+      <p className={styles.kicker}>{t("product.notBilled")}</p>
+      <h1 className={styles.titleLg}>{t("product.billingTitle")}</h1>
+      <p className={styles.lede}>{t("product.billingLede")}</p>
+
+      <div className={styles.statGrid}>
+        <article className={styles.stat}>
+          <p className={styles.statLabel}>{t("product.plan")}</p>
+          <p className={styles.statValue}>{t("product.planName")}</p>
+        </article>
+        <article className={styles.stat}>
+          <p className={styles.statLabel}>{t("product.amountDue")}</p>
+          <p className={styles.statValue}>{`$${(data?.amountDue ?? 0).toFixed(2)}`}</p>
+        </article>
+        <article className={styles.stat}>
+          <p className={styles.statLabel}>{t("product.credits")}</p>
+          <p className={styles.statValue}>{String(data?.includedCredits ?? 10000)}</p>
+        </article>
+        <article className={styles.stat}>
+          <p className={styles.statLabel}>{t("product.used")}</p>
+          <p className={styles.statValue}>{String(data?.usedCredits ?? 0)}</p>
+        </article>
       </div>
-      <p className="mt-4 text-sm text-neutral-600">
+
+      <p className={styles.muted}>
         {t("product.requests")}: {data?.meteredRequests ?? 0}
       </p>
-      <div className="card mt-6 max-w-xl p-5">
-        <h2 className="text-base font-semibold">{t("product.disabledTitle")}</h2>
-        <p className="mt-2 text-sm text-neutral-600">{t("product.disabledBody")}</p>
+
+      <div className={`${styles.panel} ${styles.panelPad}`} style={{ marginTop: "1.5rem", maxWidth: "36rem" }}>
+        <h2 className={styles.sectionTitle}>{t("product.disabledTitle")}</h2>
+        <p className={styles.muted}>{t("product.disabledBody")}</p>
         <button type="button" onClick={topup} className="btn-black mt-4 h-10 px-4 text-sm">
           {t("product.addCredits")}
         </button>
         {notice && <p className="mt-3 text-sm text-neutral-700">{notice}</p>}
       </div>
-      <section className="mt-8">
-        <h2 className="text-base font-semibold">{t("product.invoices")}</h2>
-        <p className="mt-2 text-sm text-neutral-500">{t("product.invoicesEmpty")}</p>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>{t("product.invoices")}</h2>
+        <p className={styles.muted}>{t("product.invoicesEmpty")}</p>
       </section>
     </div>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <article className="card p-4">
-      <p className="text-xs uppercase tracking-[0.12em] text-neutral-400">{label}</p>
-      <p className="mt-2 text-2xl font-semibold tracking-tight">{value}</p>
-    </article>
   );
 }

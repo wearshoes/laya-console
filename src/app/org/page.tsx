@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { copyText } from "@/lib/copy-text";
 import { useI18n } from "@/components/LocaleProvider";
+import styles from "../console-page.module.css";
 
 type Member = { id: string; email: string; name: string; role: string };
 type Invite = { id: string; email: string; token: string; accepted_at: string | null };
@@ -57,22 +58,23 @@ export default function OrgPage() {
   }
 
   return (
-    <div className="h-full overflow-auto px-6 py-8 md:px-10">
-      <h1 className="text-3xl font-semibold tracking-tight">{t("product.orgTitle")}</h1>
-      <p className="mt-2 max-w-2xl text-sm text-neutral-600">{t("product.orgLede")}</p>
+    <div className={styles.page}>
+      <p className={styles.kicker}>{t("nav.org")}</p>
+      <h1 className={styles.titleLg}>{t("product.orgTitle")}</h1>
+      <p className={styles.lede}>{t("product.orgLede")}</p>
       <p className="mt-3 text-sm font-medium">{org}</p>
       {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
 
-      <section className="mt-6">
-        <h2 className="text-base font-semibold">{t("product.members")}</h2>
-        <div className="mt-3 overflow-hidden rounded-xl border border-neutral-200">
-          <table className="w-full text-left text-sm">
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>{t("product.members")}</h2>
+        <div className={styles.panel} style={{ marginTop: "0.75rem" }}>
+          <table className={styles.table}>
             <tbody>
               {members.map((member) => (
-                <tr key={member.id} className="border-b border-neutral-100 last:border-0">
-                  <td className="px-4 py-3">{member.name}</td>
-                  <td className="px-4 py-3 text-neutral-600">{member.email}</td>
-                  <td className="px-4 py-3">{member.role === "admin" ? t("common.admin") : t("common.member")}</td>
+                <tr key={member.id}>
+                  <td className="font-medium">{member.name}</td>
+                  <td className="text-neutral-600">{member.email}</td>
+                  <td>{member.role === "admin" ? t("common.admin") : t("common.member")}</td>
                 </tr>
               ))}
             </tbody>
@@ -80,41 +82,42 @@ export default function OrgPage() {
         </div>
       </section>
 
-      <form onSubmit={onSubmit} className="card mt-8 max-w-xl p-5">
-        <h2 className="text-base font-semibold">{t("product.invite")}</h2>
-        <label className="mt-3 block text-xs text-neutral-500">
-          {t("product.inviteEmail")}
-          <input
-            required
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="field mt-1"
-          />
-        </label>
-        <button type="submit" className="btn-black mt-3 h-10 px-4 text-sm">
-          {t("product.createInvite")}
-        </button>
-        {link && (
-          <div className="mt-4">
-            <p className="text-xs text-neutral-500">{t("product.inviteLink")}</p>
-            <button type="button" onClick={copyLink} className="mt-1 break-all text-left text-sm text-[#2f6fed]">
-              {copied ? t("common.copied") : link}
-            </button>
-          </div>
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>{t("product.invite")}</h2>
+        <form onSubmit={onSubmit} className={`${styles.panel} ${styles.panelPad} ${styles.stack}`} style={{ marginTop: "0.75rem" }}>
+          <label className={styles.fieldLabel}>
+            {t("product.inviteEmail")}
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              required
+              className="field mt-1"
+              placeholder="colleague@example.com"
+            />
+          </label>
+          <button type="submit" className="btn-black h-10 px-4 text-sm">
+            {t("product.createInvite")}
+          </button>
+          {link ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <code className={styles.mono}>{link}</code>
+              <button type="button" onClick={copyLink} className="rounded-md border border-neutral-200 px-3 py-1.5 text-sm">
+                {copied ? t("common.copied") : t("common.copy")}
+              </button>
+            </div>
+          ) : null}
+        </form>
+        {invites.length > 0 && (
+          <ul className="mt-4 space-y-2 text-sm text-neutral-600">
+            {invites.map((invite) => (
+              <li key={invite.id}>
+                {invite.email}
+                {invite.accepted_at ? ` · ${t("product.accepted")}` : ` · ${t("product.pending")}`}
+              </li>
+            ))}
+          </ul>
         )}
-      </form>
-
-      <section className="mt-8">
-        <h2 className="text-base font-semibold">{t("product.pending")}</h2>
-        <ul className="mt-3 divide-y divide-neutral-200">
-          {invites.map((invite) => (
-            <li key={invite.id} className="flex items-center justify-between py-3 text-sm">
-              <span>{invite.email}</span>
-              <span className="text-neutral-500">{invite.accepted_at ? t("product.accepted") : invite.token}</span>
-            </li>
-          ))}
-        </ul>
       </section>
     </div>
   );

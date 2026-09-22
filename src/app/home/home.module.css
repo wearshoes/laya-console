@@ -280,10 +280,6 @@
   flex-direction: column;
 }
 
-.usageHidden {
-  display: none;
-}
-
 .accountNav {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -757,11 +753,7 @@
 }
 
 @container launchpad-rail (max-height: 35.6875rem) {
-  .usageHidden {
-    display: none;
-  }
-
-  /* Soft short-rail: hide prompt copy only; keep agentSetup flex height */
+  /* Soft short-rail: hide prompt copy only; keep Usage card + agentSetup */
   .promptText {
     display: none;
   }
