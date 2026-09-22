@@ -283,16 +283,12 @@ export const HOME_EDITORIAL = {
   ],
   demos: [
     {
-      preset: "triage" as const,
-      art: "wide" as const,
-      image: "/home-art/card-demo-wide.png",
+      preset: "triage",
       title: enzh("Triage desk", "分诊台"),
       body: enzh("How urgent is this support ticket?", "这张客服工单有多紧急？"),
     },
     {
-      preset: "moderation" as const,
-      art: "compact" as const,
-      image: "/home-art/card-demo-compact.png",
+      preset: "moderation",
       title: enzh("Moderation lane", "审核通道"),
       body: enzh("Should this chat be flagged?", "这段对话需要标记吗？"),
     },
