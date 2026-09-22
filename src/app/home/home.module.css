@@ -786,3 +786,12 @@
 :global(html.dark) .mobileArt {
   filter: invert(1) hue-rotate(180deg);
 }
+
+:global(html.dark) .demo {
+  background: #1c1b19;
+}
+
+:global(html.dark) .demoArtWide img,
+:global(html.dark) .demoArtCompact img {
+  filter: invert(1);
+}
