@@ -110,7 +110,8 @@
 .artwork {
   flex: 1 1 auto;
   min-width: 0;
-  opacity: 0.4;
+  opacity: 0.55;
+  background-color: #000;
   background-image: url("/home-art/hero-artwork-strip.png");
   background-position: 0 0;
   background-repeat: repeat-x;
