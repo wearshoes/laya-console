@@ -255,40 +255,42 @@ export const HOME_EDITORIAL = {
     {
       title: enzh("Parallel questions", "并行问题"),
       body: enzh(
-        "One state, two judgments: triage the ticket and guard the draft in the same review.",
-        "一份状态，两次判断：在同一次检查里分诊工单并防护草稿。"
+        "Ask triage + guard in one predict call.",
+        "一次 predict 同时提出分诊和防护。"
       ),
     },
     {
       title: enzh("Preset cascade", "预设级联"),
       body: enzh(
-        "Route first, then run email or moderation on the same payload.",
-        "先路由，再对同一份内容运行邮件或审核预设。"
+        "Router first, then deepen with email or moderation.",
+        "先路由，再用邮件或审核加深。"
       ),
     },
     {
-      title: enzh("Snapshot share", "快照分享"),
+      title: enzh("Confidence gate", "置信门槛"),
       body: enzh(
-        "Save a playground state as a share link. The link has no API key.",
-        "把试验场状态存成分享链接。链接里没有 API 密钥。"
+        "Automate high-confidence answers; escalate the rest.",
+        "高置信度自动处理，其余升级。"
+      ),
+    },
+    {
+      title: enzh("Inbox router", "收件箱路由"),
+      body: enzh(
+        "Route sales vs support vs spam with the email preset.",
+        "用邮件预设区分销售、支持和垃圾邮件。"
       ),
     },
   ],
   demos: [
     {
       preset: "triage",
-      title: enzh("Support desk", "支持台"),
-      body: enzh("How urgent is a refund ticket?", "退款工单有多紧急？"),
-    },
-    {
-      preset: "email",
-      title: enzh("Inbox router", "收件箱路由"),
-      body: enzh("Which queue should this thread land in?", "这封邮件该进哪个队列？"),
+      title: enzh("Triage desk", "分诊台"),
+      body: enzh("How urgent is this support ticket?", "这张客服工单有多紧急？"),
     },
     {
       preset: "moderation",
-      title: enzh("Comment review", "评论审核"),
-      body: enzh("Does this comment need a decision?", "这条评论需要处理吗？"),
+      title: enzh("Moderation lane", "审核通道"),
+      body: enzh("Should this chat be flagged?", "这段对话需要标记吗？"),
     },
   ],
 };

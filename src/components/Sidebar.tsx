@@ -25,6 +25,7 @@ export function Sidebar({
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(initialCollapsed);
+  const [narrow, setNarrow] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const initials =
     name
@@ -42,6 +43,21 @@ export function Sidebar({
     return () => window.removeEventListener("mousedown", onPointer);
   }, []);
 
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 63.99rem)");
+    const apply = () => {
+      const isNarrow = mq.matches;
+      setNarrow(isNarrow);
+      if (isNarrow) setCollapsed(true);
+      else setCollapsed(document.cookie.includes("laya_sidebar=collapsed") || initialCollapsed);
+    };
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, [initialCollapsed]);
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   const items = [
     { href: "/home", label: t("nav.home"), icon: HomeIcon },
     { href: "/playground", label: t("nav.playground"), icon: FlaskIcon },
@@ -56,6 +72,7 @@ export function Sidebar({
   ];
 
   function toggleCollapsed() {
+    if (narrow) return;
     setCollapsed((value) => {
       const next = !value;
       document.cookie = `laya_sidebar=${next ? "collapsed" : "expanded"}; Path=/; Max-Age=31536000; SameSite=Lax`;
@@ -69,8 +86,85 @@ export function Sidebar({
     router.refresh();
   }
 
+  const navLinks = (
+    <nav className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-auto px-2 pt-2">
+      {items.map((item) => {
+        const active = pathname === item.href || pathname.startsWith(item.href + "/");
+        const Icon = item.icon;
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            title={item.label}
+            aria-label={item.label}
+            onClick={() => setDrawerOpen(false)}
+            className={`flex items-center gap-2.5 rounded-lg py-2 text-sm transition duration-150 ${
+              collapsed && !narrow ? "justify-center px-2" : "px-3"
+            } ${
+              active
+                ? "bg-neutral-100 font-medium text-neutral-950 shadow-sm"
+                : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-950"
+            }`}
+          >
+            <Icon />
+            {(!collapsed || narrow) && item.label}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+
+  if (narrow) {
+    return (
+      <>
+        <header className="flex h-12 w-full shrink-0 items-center gap-3 border-b border-neutral-200 bg-white px-3 lg:hidden">
+          <button
+            type="button"
+            className="grid h-8 w-8 place-items-center rounded-md border border-neutral-200 text-neutral-700"
+            aria-expanded={drawerOpen}
+            aria-label={drawerOpen ? t("common.collapseSidebar") : t("common.expandSidebar")}
+            onClick={() => setDrawerOpen((v) => !v)}
+          >
+            ☰
+          </button>
+          <LayaMark className="h-5 w-5 text-neutral-950" />
+          <span className="text-[12px] font-semibold tracking-[0.14em] text-neutral-950">LAYA</span>
+          <div className="ml-auto flex items-center gap-2">
+            <LanguageSwitcher />
+          </div>
+        </header>
+        {drawerOpen && (
+          <div className="fixed inset-0 z-40 lg:hidden" onMouseDown={() => setDrawerOpen(false)}>
+            <div className="absolute inset-0 bg-black/30" />
+            <aside
+              className="absolute bottom-0 left-0 top-0 flex w-[232px] flex-col border-r border-neutral-200 bg-white shadow-xl"
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center gap-2.5 px-4 pb-2 pt-5">
+                <LayaMark className="h-6 w-6 text-neutral-950" />
+                <span className="text-[13px] font-semibold tracking-[0.16em]">LAYA</span>
+              </div>
+              {navLinks}
+              <div className="border-t border-neutral-200 p-3" ref={menuRef}>
+                <p className="px-2 text-sm font-medium">{name}</p>
+                <p className="px-2 text-xs text-neutral-500">{org}</p>
+                <button type="button" onClick={logout} className="mt-2 w-full rounded-lg px-2 py-2 text-left text-sm hover:bg-neutral-50">
+                  {t("common.signOut")}
+                </button>
+              </div>
+            </aside>
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
-    <aside className={`flex h-full shrink-0 flex-col border-r border-neutral-200 bg-white transition-[width] duration-200 ${collapsed ? "w-[72px]" : "w-[232px]"}`}>
+    <aside
+      className={`flex h-full shrink-0 flex-col border-r border-neutral-200 bg-white transition-[width] duration-200 ${
+        collapsed ? "w-[72px]" : "w-[232px]"
+      }`}
+    >
       <div className={`flex items-center gap-2.5 pb-2 pt-5 ${collapsed ? "justify-center px-2" : "px-4"}`}>
         <LayaMark className="h-6 w-6 shrink-0 text-neutral-950" />
         {!collapsed && <span className="text-[13px] font-semibold tracking-[0.16em] text-neutral-950">LAYA</span>}
@@ -84,30 +178,7 @@ export function Sidebar({
           {collapsed ? "»" : "«"}
         </button>
       </div>
-      <nav className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-auto px-2 pt-2">
-        {items.map((item) => {
-          const active = pathname === item.href || pathname.startsWith(item.href + "/");
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              title={item.label}
-              aria-label={item.label}
-              className={`flex items-center gap-2.5 rounded-lg py-2 text-sm transition duration-150 ${
-                collapsed ? "justify-center px-2" : "px-3"
-              } ${
-                active
-                  ? "bg-neutral-100 font-medium text-neutral-950 shadow-sm"
-                  : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-950"
-              }`}
-            >
-              <Icon />
-              {!collapsed && item.label}
-            </Link>
-          );
-        })}
-      </nav>
+      {navLinks}
       {!collapsed && (
         <div className="flex flex-wrap items-center gap-2 px-3 pb-2">
           <LanguageSwitcher />

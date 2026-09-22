@@ -1,0 +1,592 @@
+/* Structure metrics mirrored from launchpad CSS extract (Laya branding only). */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  background: #fff;
+  color: #0a0a0a;
+}
+
+.title2xl {
+  font-size: 4.4rem;
+  line-height: 0.85;
+  letter-spacing: -0.07em;
+  font-weight: 500;
+}
+
+.titleLine {
+  display: block;
+  white-space: nowrap;
+}
+
+.titleLg {
+  font-size: 2.25rem;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  font-weight: 500;
+}
+
+.desktopBanner {
+  display: none;
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  height: 17rem;
+  min-height: 17rem;
+  border-bottom: 1px solid #e7e7e7;
+  overflow: hidden;
+  background: #f7f7f8;
+}
+
+.desktopBannerLink {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.desktopTitleSection {
+  display: flex;
+  flex: 0 0 auto;
+  flex-basis: 26.0625rem;
+  min-width: 26.0625rem;
+  max-width: 26.0625rem;
+  padding: 2rem 5.5rem 2rem 2.75rem;
+  box-sizing: border-box;
+}
+
+.desktopTitleContent {
+  display: flex;
+  width: 18rem;
+  height: 100%;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #737373;
+}
+
+.cta {
+  display: inline-flex;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-inline: 2rem;
+  border-radius: 0.5rem;
+  background: #0a0a0a;
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.modelStamp {
+  width: 3.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.625rem;
+  line-height: 1.35;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: right;
+  color: #a3a3a3;
+}
+
+.artwork {
+  flex: 1 1 auto;
+  min-width: 0;
+  opacity: 0.4;
+  background-image: url("/home-art/hero-artwork-strip.png");
+  background-position: 0 0;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  transition: opacity 0.2s;
+}
+
+.desktopBanner:is(:hover, :focus-within) .artwork {
+  opacity: 1;
+}
+
+.mobileHero {
+  display: block;
+  flex: 0 0 auto;
+  border-bottom: 1px solid #e7e7e7;
+  padding: 1.5rem 1.25rem 1.75rem;
+}
+
+.mobileHero .title2xl {
+  font-size: 2.5rem;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.mobileHero .modelStamp {
+  display: none;
+}
+
+.mobileArt {
+  margin-top: 1.25rem;
+  height: 8.5rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  opacity: 0.55;
+  background-image: url("/home-art/hero-artwork-strip.png");
+  background-position: 0 0;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+.lowerGrid {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.rail {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  flex-direction: column;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.quickstartHeader {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  height: 6.25rem;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 2.5rem 1.5rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.quickstartHeader h2 {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.quickstartHeader .linkBlue {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.agentSetup {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 12rem;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.agentBody {
+  display: flex;
+  flex: 1 1 0%;
+  min-height: 0;
+  flex-direction: column;
+  padding-inline: 1.5rem;
+}
+
+.promptFrame {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  min-height: 10rem;
+  max-height: 18rem;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e7e7e7;
+  border-radius: 0.75rem;
+  background: #fff;
+}
+
+.promptText {
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1rem 1rem 4rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: #404040;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.copyAction {
+  position: absolute;
+  inset-inline-end: 0.75rem;
+  inset-block-end: 0.75rem;
+  padding: 0;
+}
+
+.copyButton {
+  display: inline-flex;
+  height: 2.25rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  background: #0a0a0a;
+  padding: 0.5rem 0.75rem;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.agentFooter {
+  display: flex;
+  flex: 0 0 auto;
+  height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 1.5rem;
+}
+
+.agentFooter a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #2f6fed;
+  font-size: 0.875rem;
+}
+
+.secondary {
+  flex: 0 0 auto;
+}
+
+.accountNav {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid #e7e7e7;
+}
+
+.accountNav a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid #e7e7e7;
+  padding: 1rem 1.5rem;
+  color: #171717;
+  font-size: 0.875rem;
+}
+
+.accountNav a:last-child {
+  border-bottom: 0;
+}
+
+.usageHidden {
+  display: none;
+}
+
+.inAction {
+  min-width: 0;
+  padding: 1.5rem 1.25rem 2rem;
+}
+
+.inActionHeader {
+  display: flex;
+  min-height: 3.5rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.cookbooks {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.cookbook {
+  display: flex;
+  gap: 0.85rem;
+  border-top: 1px solid #ececec;
+  padding: 1rem 0.25rem;
+  color: #525252;
+}
+
+.cookbook strong {
+  display: block;
+  color: #171717;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.cookbook p {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.demos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.demo {
+  display: block;
+  overflow: hidden;
+  border: 1px solid #e7e7e7;
+  border-radius: 0.75rem;
+  background: #fafafa;
+  text-decoration: none;
+  color: inherit;
+}
+
+.demoArt {
+  height: 7rem;
+  background:
+    radial-gradient(circle at 30% 20%, #d7fff1, transparent 45%),
+    radial-gradient(circle at 80% 0%, #d9e4ff, transparent 40%),
+    linear-gradient(160deg, #f7f7f8, #fff);
+}
+
+.demoBody {
+  padding: 0.85rem 1rem 1rem;
+}
+
+.demoBody span {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+}
+
+.demoBody strong {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.9375rem;
+}
+
+.demoBody p {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  color: #737373;
+}
+
+.allCookbooks {
+  display: inline-flex;
+  margin-top: 0.75rem;
+  color: #2f6fed;
+  font-size: 0.875rem;
+}
+
+.utilities {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid #e7e7e7;
+}
+
+.utilities a {
+  display: flex;
+  min-height: 6rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid #e7e7e7;
+  padding: 1rem 1.25rem;
+  color: #404040;
+  font-size: 0.875rem;
+}
+
+.utilities a:last-child {
+  border-bottom: 0;
+}
+
+.linkBlue {
+  color: #2f6fed;
+}
+
+@media (min-width: 40rem) {
+  .cookbooks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem 1rem;
+  }
+
+  .cookbook {
+    border-top: 0;
+    border-radius: 0.75rem;
+    background: #fafafa;
+    padding: 1rem;
+  }
+
+  .accountNav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .utilities {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .utilities a {
+    border-right: 1px solid #e7e7e7;
+  }
+}
+
+@media (min-width: 64rem) {
+  .desktopBanner {
+    display: block;
+  }
+
+  .mobileHero {
+    display: none;
+  }
+
+  .lowerGrid {
+    display: grid;
+    min-height: 0;
+    overflow: hidden;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr) 6rem;
+  }
+
+  .rail {
+    grid-column-start: 3;
+    grid-row: 1 / -1;
+    height: 100%;
+    min-height: 0;
+    flex: 1 1 auto;
+    border-bottom: 0;
+    border-left: 1px solid #e7e7e7;
+    container: launchpad-rail / size;
+  }
+
+  .agentSetup {
+    flex: 1 1 0%;
+    min-height: 0;
+  }
+
+  .promptFrame {
+    flex: 1 1 0%;
+    max-height: none;
+    min-height: 0;
+  }
+
+  .inAction {
+    grid-column: span 2 / span 2;
+    grid-row: 1;
+    overflow: auto;
+    padding: 1.5rem 1.5rem 1.25rem;
+  }
+
+  .showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: 1rem 1.25rem;
+    align-items: start;
+  }
+
+  .utilities {
+    grid-column: span 2 / span 2;
+    grid-row: 2;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid #e7e7e7;
+  }
+
+  .utilities a {
+    min-height: 6rem;
+    border-bottom: 0;
+    border-right: 1px solid #e7e7e7;
+  }
+
+  .utilities a:last-child {
+    border-right: 0;
+  }
+
+  .demos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0;
+  }
+}
+
+@container launchpad-rail (max-height: 35.6875rem) {
+  .usageHidden {
+    display: none;
+  }
+}
+
+@media (min-width: 64rem) and (max-height: 681px) {
+  .agentSetup {
+    flex: 0 0 auto;
+    height: 6.75rem;
+    min-height: 6.75rem;
+  }
+
+  .agentBody {
+    flex: 0 0 auto;
+    height: auto;
+  }
+
+  .promptFrame {
+    border: 0;
+    min-height: 0;
+  }
+
+  .promptText {
+    display: none;
+  }
+
+  .copyAction {
+    position: static;
+    padding: 0;
+  }
+
+  .copyButton {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artwork {
+    transition: none;
+  }
+}
+
+:global(html.dark) .page,
+:global(html.dark) .promptFrame {
+  background: #121214;
+  color: #f4f4f5;
+}
+
+:global(html.dark) .cta,
+:global(html.dark) .copyButton {
+  background: #f4f4f5;
+  color: #111113;
+}
+
+:global(html.dark) .artwork,
+:global(html.dark) .mobileArt {
+  filter: invert(1) hue-rotate(180deg);
+}

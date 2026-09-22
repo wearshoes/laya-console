@@ -12,7 +12,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
   const jar = await cookies();
   const collapsed = jar.get("laya_sidebar")?.value === "collapsed";
   return (
-    <div className="flex h-screen overflow-hidden bg-[#f7f7f8]">
+    <div className="flex h-screen flex-col overflow-hidden bg-[#f7f7f8] lg:flex-row">
       <SkipLink />
       <Sidebar name={session.name} org={session.org} role={session.role} initialCollapsed={collapsed} />
       <div id="main" tabIndex={-1} className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-white outline-none">

@@ -108,6 +108,9 @@ export const en = {
     guard: "Guard",
     triageQ: "How urgent is this ticket?",
     guardQ: "Is it safe to answer?",
+    allCookbooks: "All cookbooks",
+    github: "Join us on GitHub",
+    replay: "Replay intro",
   },
   presets: {
     triage: {
@@ -624,6 +627,9 @@ export const zhCN: Dict = {
     guard: "防护",
     triageQ: "这张工单有多紧急？",
     guardQ: "这样回复安全吗？",
+    allCookbooks: "全部做法",
+    github: "加入 GitHub",
+    replay: "重看介绍",
   },
   presets: {
     triage: {
