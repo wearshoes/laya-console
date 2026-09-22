@@ -170,7 +170,7 @@ export default function HomePage() {
               <section aria-label={tx(HOME_EDITORIAL.demosTitle, locale)}>
                 <h3 className={styles.srOnly}>{tx(HOME_EDITORIAL.demosTitle, locale)}</h3>
                 <ul className={styles.demos}>
-                  {HOME_EDITORIAL.demos.map((item, i) => (
+                  {HOME_EDITORIAL.demos.map((item) => (
                     <li key={item.preset} className={styles.demoItem}>
                       <Link
                         href={`/playground?preset=${item.preset}`}
@@ -178,14 +178,14 @@ export default function HomePage() {
                         aria-label={`View demo: ${tx(item.title, "en")}`}
                       >
                         <span className={styles.demoArtRow}>
-                          <span className={i === 0 ? styles.demoArtWide : styles.demoArtCompact}>
+                          <span className={item.art === "wide" ? styles.demoArtWide : styles.demoArtCompact}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                              src={i === 0 ? "/home-art/demo-triage.svg" : "/home-art/demo-moderation.svg"}
+                              src={item.image}
                               alt=""
                               aria-hidden
-                              width={i === 0 ? 135.539 : 72.9937}
-                              height={i === 0 ? 80 : 76.9948}
+                              width={item.art === "wide" ? 135.539 : 72.9937}
+                              height={item.art === "wide" ? 80 : 76.9948}
                             />
                           </span>
                         </span>

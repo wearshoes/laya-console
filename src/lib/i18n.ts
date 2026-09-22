@@ -606,7 +606,7 @@ export const zhCN: Dict = {
     v1: "Laya",
     v2: "System One",
     v3: "类型化输出",
-    inAction: "Laya 在运转",
+    inAction: "Laya 实战应用",
     parallelTitle: "并行问题",
     parallelBody: "一次 predict 可以提出多个类型化问题，让一条客服状态同时返回队列和策略判断。",
     cascadeTitle: "预设级联",

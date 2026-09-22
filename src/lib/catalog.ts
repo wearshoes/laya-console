@@ -255,42 +255,46 @@ export const HOME_EDITORIAL = {
     {
       title: enzh("Parallel questions", "并行问题"),
       body: enzh(
-        "Ask triage + guard in one predict call.",
-        "一次 predict 同时提出分诊和防护。"
+        "Runs a 13-question regulatory briefing over the GDPR Wikipedia article, showing that batching every question into one Laya call is 11.5x cheaper and 9.6x faster with no change in answers.",
+        "对 GDPR 维基百科文章跑 13 个监管简报问题：把所有问题打进一次 Laya 调用，成本约低 11.5 倍、速度约快 9.6 倍，答案不变。"
       ),
     },
     {
-      title: enzh("Preset cascade", "预设级联"),
+      title: enzh("SDE cascade", "结构化抽取级联"),
       body: enzh(
-        "Router first, then deepen with email or moderation.",
-        "先路由，再用邮件或审核加深。"
+        "Uses a 2-stage structured-data-extraction cascade (mini → verify → reasoning) to get most of the quality of a big reasoning model at a fraction of the cost.",
+        "用两阶段结构化抽取级联（mini → 校验 → 推理），以远低于大推理模型的成本拿到接近的质量。"
       ),
     },
     {
-      title: enzh("Confidence gate", "置信门槛"),
+      title: enzh("Self-consistency", "自洽一致性"),
       body: enzh(
-        "Automate high-confidence answers; escalate the rest.",
-        "高置信度自动处理，其余升级。"
+        "Scores an auto-insurance claim against a 15-question adjudication rubric, showing that LLM answers vary run to run while Laya returns stable noul probabilities far faster and cheaper.",
+        "用 15 题裁定量表给车险理赔打分：普通 LLM 每次回答会漂，而 Laya 以更低成本更快返回稳定的 noul 概率。"
       ),
     },
     {
-      title: enzh("Inbox router", "收件箱路由"),
+      title: enzh("Function calling", "函数调用"),
       body: enzh(
-        "Route sales vs support vs spam with the email preset.",
-        "用邮件预设区分销售、支持和垃圾邮件。"
+        "Turns natural-language trading requests into calls to ordinary typed functions by mapping function names and closed-set arguments to confidence-aware Laya questions.",
+        "把自然语言交易请求映射成普通类型化函数调用：函数名与闭集参数对应到带置信度的 Laya 问题。"
       ),
     },
   ],
   demos: [
     {
-      preset: "triage",
-      title: enzh("Triage desk", "分诊台"),
-      body: enzh("How urgent is this support ticket?", "这张客服工单有多紧急？"),
+      preset: "router" as const,
+      title: enzh("Wikirace", "维基竞速"),
+      body: enzh("How many hops will Laya take?", "Laya 需要跳几步？"),
+      image: "/assets/launchpad/demo-wikirace.svg",
+      art: "wide" as const,
     },
     {
-      preset: "moderation",
-      title: enzh("Moderation lane", "审核通道"),
-      body: enzh("Should this chat be flagged?", "这段对话需要标记吗？"),
+      preset: "guard" as const,
+      title: enzh("Smarthome", "智能家居"),
+      body: enzh("Laya controls appliances", "Laya 控制家电"),
+      image: "/assets/launchpad/demo-smart-home.svg",
+      art: "compact" as const,
     },
   ],
 };
