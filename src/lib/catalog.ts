@@ -126,8 +126,8 @@ export const DOC_PAGES: DocPage[] = [
       {
         h: enzh("Console session", "控制台会话"),
         p: enzh(
-          "Register and sign-in set an httpOnly cookie. Passwords are stored as scrypt hashes. ADMIN_EMAILS promotes those addresses to admin; everyone else is a member.",
-          "注册和登录会设置 httpOnly Cookie。密码以 scrypt 哈希保存。ADMIN_EMAILS 中的邮箱成为管理员，其他人是成员。"
+          "Register and sign-in set an httpOnly cookie. Passwords are stored as scrypt hashes. New accounts are members.",
+          "注册和登录会设置 httpOnly Cookie。密码以 scrypt 哈希保存。新账号是成员。"
         ),
       },
       {

@@ -160,7 +160,7 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/docs/patterns" className={styles.allCookbooks} target="_blank" rel="noreferrer">
+                <Link href="/docs/cookbooks" className={styles.allCookbooks} target="_blank" rel="noreferrer">
                   {t("home.allCookbooks")}
                 </Link>
               </section>

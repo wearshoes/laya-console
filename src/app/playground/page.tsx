@@ -197,7 +197,7 @@ function PlaygroundInner() {
 
             <div className="mt-2 flex items-center justify-between">
               <p className="text-sm text-neutral-700">{t("playground.select")}</p>
-              <Link href="/docs/presets" className={styles.linkBlue}>
+              <Link href="/docs/api/presets" className={styles.linkBlue}>
                 {t("playground.docs")}
               </Link>
             </div>

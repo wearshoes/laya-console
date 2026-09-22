@@ -71,7 +71,7 @@ export const en = {
     submitting: "Creating…",
     have: "Already have an account? Sign in",
     mismatch: "Passwords do not match",
-    hint: "At least 8 characters. Emails listed in ADMIN_EMAILS become admins.",
+    hint: "At least 8 characters.",
     inviteNote: "If this email matches the invite, the new account joins that organization.",
   },
   home: {
@@ -328,7 +328,7 @@ export const en = {
       blocks: [
         block(
           "Create an account",
-          "Register with email and password. New users are members. An email listed in the server ADMIN_EMAILS variable is signed in as an admin and can open Audit and Team."
+          "Register with email and password. New accounts start as members."
         ),
         block(
           "Create an API key",
@@ -621,7 +621,7 @@ export const zhCN: Dict = {
     submitting: "正在创建…",
     have: "已有账户？去登录",
     mismatch: "两次输入的密码不一致",
-    hint: "至少 8 个字符。写在服务器 ADMIN_EMAILS 里的邮箱会成为管理员。",
+    hint: "至少 8 个字符。",
     inviteNote: "如果邮箱与邀请一致，新账号会加入该组织。",
   },
   home: {
@@ -876,7 +876,7 @@ export const zhCN: Dict = {
       blocks: [
         block(
           "创建账户",
-          "使用邮箱和密码注册。新用户默认是成员。写在服务器环境变量 ADMIN_EMAILS 中的邮箱会以管理员身份登录，并可以打开审计和团队。"
+          "使用邮箱和密码注册。新账号默认是成员。"
         ),
         block(
           "创建 API 密钥",

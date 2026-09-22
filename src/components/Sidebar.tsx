@@ -183,13 +183,6 @@ export function Sidebar({
         <div className="flex flex-wrap items-center gap-2 px-3 pb-2">
           <LanguageSwitcher />
           <ThemeToggle />
-          <button
-            type="button"
-            className="rounded-full border border-neutral-200 px-2.5 py-1 text-[11px] text-neutral-500 transition hover:bg-neutral-50"
-            onClick={() => window.dispatchEvent(new Event("laya-open-commands"))}
-          >
-            {t("common.commands")}
-          </button>
         </div>
       )}
       <div className="relative border-t border-neutral-200 p-3" ref={menuRef}>
