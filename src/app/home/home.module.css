@@ -110,8 +110,8 @@
 .artwork {
   flex: 1 1 auto;
   min-width: 0;
-  opacity: 0.4;
   background-color: #000;
+  opacity: 0.4;
   background-image: url("/home-art/hero-artwork-strip.png");
   background-position: 0 0;
   background-repeat: repeat-x;
@@ -145,6 +145,7 @@
   height: 8.5rem;
   border-radius: 0.75rem;
   overflow: hidden;
+  background-color: #000;
   opacity: 0.55;
   background-image: url("/home-art/hero-artwork-strip.png");
   background-position: 0 0;
@@ -301,35 +302,23 @@
 
 .inAction {
   display: flex;
+  flex-direction: column;
   min-width: 0;
   min-height: 0;
-  flex-direction: column;
-  background: #fff;
 }
 
-.inActionGrid {
+/* Mirrors TypeSafe: mx-auto grid max-w-300 xl:grid-cols-3 gap-x-2 gap-y-6 */
+.showcase {
   display: grid;
+  grid-template-columns: 1fr;
+  column-gap: 0.5rem; /* gap-x-2 */
+  row-gap: 1.5rem; /* gap-y-6 */
   width: 100%;
-  max-width: 75rem;
+  max-width: 75rem; /* max-w-300 with --spacing .25rem */
   min-width: 0;
   margin-inline: auto;
-  flex: none;
-  grid-template-columns: minmax(0, 1fr);
-  column-gap: 0.5rem;
-  row-gap: 1.5rem;
-  padding: 0.5rem 0.5rem 1.5rem;
-}
-
-.cookbooksCol,
-.demosCol {
-  min-width: 0;
-}
-
-.inActionHeader {
-  display: flex;
-  min-height: 6.25rem;
-  align-items: flex-end;
-  padding: 0 0.5rem 1rem;
+  padding: 0 0.5rem 2rem; /* px-2 pb-8 */
+  box-sizing: border-box;
 }
 
 .srOnly {
@@ -344,35 +333,46 @@
   border: 0;
 }
 
-.cookbookList {
-  display: grid;
+.cookbooksCol {
   min-width: 0;
-  grid-template-columns: minmax(0, 1fr);
-  column-gap: 0.5rem;
-  row-gap: 0;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
-.cookbookRow {
+.inActionHeader {
   display: flex;
-  min-width: 0;
-  min-height: 11rem;
-  height: 11rem;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 0.5rem;
-  padding: 1rem;
-  color: #737373;
-  text-decoration: none;
-  transition: color 0.15s ease-out, background-color 0.15s ease-out;
+  min-height: 6.25rem; /* min-h-25 */
+  align-items: flex-end;
+  padding: 2.5rem 1rem 1.5rem; /* pt-10 px-4 pb-6 */
   box-sizing: border-box;
 }
 
-.cookbookRow:hover,
-.cookbookRow:focus-visible {
-  color: #404040;
+.cookbooks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: 0.5rem; /* gap-x-2 */
+  min-width: 0;
+}
+
+.cookbookItem {
+  min-width: 0;
+}
+
+.cookbook {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 1rem; /* p-4 */
+  text-decoration: none;
+  color: #737373; /* ink-soft default on row */
+  transition: color 0.15s ease-out, background-color 0.15s ease-out;
+}
+
+.cookbook:hover,
+.cookbook:focus-visible {
+  color: #171717;
   background: rgba(0, 0, 0, 0.03);
   outline: none;
 }
@@ -382,102 +382,132 @@
   width: 100%;
   min-width: 0;
   flex-direction: column;
-  gap: 0.25rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  gap: 0.25rem; /* gap-1 */
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.25rem; /* leading-5 */
 }
 
 .cookbookTitle {
-  color: #171717;
-  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+  color: #171717; /* ink-body */
 }
 
 .cookbookBody {
-  color: inherit;
-}
-
-.cookbookAction {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin-top: auto;
-  color: #2f6fed;
-  font-size: 0.8125rem;
-  opacity: 0;
-  transition: opacity 0.15s ease-out;
-}
-
-.cookbookRow:hover .cookbookAction,
-.cookbookRow:focus-visible .cookbookAction {
-  opacity: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+  color: #737373; /* ink-soft */
 }
 
 .allCookbooks {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  margin: 1rem 1rem 0;
+  margin: 1rem 1rem 0; /* mt-4 mx-4 */
   color: #2f6fed;
   font-size: 0.875rem;
+  font-weight: 500;
   text-decoration: none;
 }
 
-.demoList {
-  display: grid;
+.allCookbooks:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.demosCol {
   min-width: 0;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
+  padding-inline: 1rem; /* px-4 */
+}
+
+.demos {
   list-style: none;
   margin: 0;
   padding: 0;
-  max-width: 10.5625rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem; /* gap-4 */
+  min-width: 0;
 }
 
-.demoCard {
+.demoItem {
+  min-width: 0;
+}
+
+.demo {
+  position: relative;
+  isolation: isolate;
   display: flex;
   width: 100%;
   min-width: 0;
   flex-direction: column;
   overflow: hidden;
   border: 0;
-  border-radius: 0.75rem;
-  background: #f7f7f8;
-  color: inherit;
+  padding: 0;
+  background: #f5f5f5; /* surface-soft */
   text-align: left;
   text-decoration: none;
-  cursor: pointer;
+  color: inherit;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+
+.demo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.03);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.demo:hover::before,
+.demo:focus-visible::before {
+  opacity: 1;
+}
+
+.demoArtRow {
+  display: flex;
+  width: 100%;
+  flex-shrink: 0;
+  align-items: flex-start;
+  padding: 1rem 0 0.5rem 1rem; /* pt-4 pl-4 pb-2 */
 }
 
 .demoArtWide {
-  display: flex;
-  height: 5rem;
-  width: 8.471rem;
+  display: block;
   flex-shrink: 0;
-  align-items: flex-end;
-  padding: 0.25rem 0 0 0.5rem;
+  width: 135.539px;
+  height: 5rem; /* h-20 */
 }
 
 .demoArtWide img {
   display: block;
+  width: 135.539px;
   height: 5rem;
-  width: 8.471rem;
   max-width: none;
 }
 
 .demoArtCompact {
-  display: flex;
-  height: 5rem;
-  width: 5.339rem;
+  display: block;
   flex-shrink: 0;
-  align-items: center;
+  width: 85.43px;
+  height: 5rem;
   padding-inline: 0.5rem;
   opacity: 0.6;
+  box-sizing: border-box;
 }
 
 .demoArtCompact img {
   display: block;
-  height: 4.812rem;
-  width: 4.562rem;
+  width: 72.9937px;
+  height: 76.9948px;
   max-width: none;
 }
 
@@ -486,32 +516,32 @@
   width: 100%;
   min-width: 0;
   flex-direction: column;
-  padding: 0.5rem 1rem 1rem;
+  padding: 0.5rem 1rem 1rem; /* pt-2 px-4 pb-4 */
 }
 
 .demoTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
   color: #171717;
-  font-size: 0.9375rem;
-  font-weight: 600;
 }
 
-.demoMeta {
+.demoSwap {
   display: grid;
+  grid-template-columns: 1fr;
   min-width: 0;
-  grid-template-columns: minmax(0, 1fr);
-  margin-top: 0.25rem;
+  margin-top: 0.15rem;
 }
 
-.demoSoft,
+.demoDesc,
 .demoPlay {
   grid-column: 1;
   grid-row: 1;
 }
 
-.demoSoft {
+.demoDesc {
   color: #737373;
-  font-size: 0.8125rem;
-  line-height: 1.35;
   overflow-wrap: anywhere;
   transition: opacity 0.15s ease-out;
 }
@@ -521,21 +551,46 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  align-self: end;
+  align-self: flex-end;
+  font-weight: 500;
   color: #2f6fed;
-  font-size: 0.8125rem;
   opacity: 0;
   transition: opacity 0.15s ease-out;
 }
 
-.demoCard:hover .demoSoft,
-.demoCard:focus-visible .demoSoft {
+.demo:hover .demoDesc,
+.demo:focus-visible .demoDesc {
   opacity: 0;
 }
 
-.demoCard:hover .demoPlay,
-.demoCard:focus-visible .demoPlay {
+.demo:hover .demoPlay,
+.demo:focus-visible .demoPlay {
   opacity: 1;
+}
+
+@media (min-width: 40rem) {
+  .showcase {
+    padding-inline: 1.5rem; /* sm:px-6 */
+  }
+
+  .cookbooks {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* sm:grid-cols-2 */
+  }
+}
+
+@media (min-width: 80rem) {
+  /* xl:grid-cols-3 — cookbooks span 2, demos column 1 */
+  .showcase {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cookbooksCol {
+    grid-column: span 2 / span 2; /* xl:col-span-2 */
+  }
+
+  .demosCol {
+    padding-top: 2.5rem; /* xl:pt-10 align under title pad */
+  }
 }
 
 .utilities {
@@ -566,9 +621,6 @@
 }
 
 @media (min-width: 40rem) {
-  .cookbookList {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 
   .accountNav {
     grid-template-columns: 1fr 1fr;
@@ -620,25 +672,6 @@
     flex: 1 1 0%;
     max-height: none;
     min-height: 0;
-  }
-
-  .inAction {
-    grid-column: span 2 / span 2;
-    grid-row: 1;
-    overflow: auto;
-  }
-
-  .inActionGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .cookbooksCol {
-    grid-column: span 2 / span 2;
-  }
-
-  .demosCol {
-    padding-inline: 1rem;
-    padding-top: 2.5rem;
   }
 
   .utilities {
@@ -700,19 +733,10 @@
   .artwork {
     transition: none;
   }
-
-  .cookbookRow,
-  .cookbookAction,
-  .demoSoft,
-  .demoPlay {
-    transition: none;
-  }
 }
 
 :global(html.dark) .page,
-:global(html.dark) .promptFrame,
-:global(html.dark) .inAction,
-:global(html.dark) .demoCard {
+:global(html.dark) .promptFrame {
   background: #121214;
   color: #f4f4f5;
 }
@@ -726,19 +750,4 @@
 :global(html.dark) .artwork,
 :global(html.dark) .mobileArt {
   filter: invert(1) hue-rotate(180deg);
-}
-
-:global(html.dark) .demoArtWide img,
-:global(html.dark) .demoArtCompact img {
-  filter: invert(1);
-}
-
-:global(html.dark) .cookbookTitle,
-:global(html.dark) .demoTitle {
-  color: #f4f4f5;
-}
-
-:global(html.dark) .cookbookRow:hover,
-:global(html.dark) .cookbookRow:focus-visible {
-  background: rgba(255, 255, 255, 0.04);
 }
