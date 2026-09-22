@@ -1,2 +1,120 @@
-# laya-console
-TypeSafe-inspired console for Wearglass Laya decision API (API keys, playground, usage)
+# Laya Console
+
+Wearglass control panel for the **Laya** decision API. Brand: **Laya Console**.
+
+The UI follows the layout of a modern API console (split login, sidebar, playground, usage, keys) with original Laya / Wearglass branding. It does not include another product’s trademarks, logo, or bundles.
+
+## Stack
+
+- Next.js App Router, TypeScript, Tailwind
+- SQLite via `better-sqlite3`
+- Passwords hashed with Node **scrypt** (`scrypt$N$r$p$salt$hash`)
+- API key secrets stored only as **SHA-256** plus a short prefix
+- Upstream: `LAYA_UPSTREAM_URL` (default `https://laya.wearglass.work`)
+
+## Roles
+
+| Role | Access |
+| --- | --- |
+| `member` (default) | Own API keys, own usage, playground, in-app docs |
+| `admin` | Everything a member has, plus **Audit** (all accounts and keys) and **Team** (change roles) |
+
+`ADMIN_EMAILS` is a comma-separated list. Matching addresses are promoted to `admin` on register and on sign-in. Other users stay `member`. Removing an address from the list does not demote someone who was promoted in Team.
+
+Audit is admin-only. Members do not see it in the sidebar. `/audit` and `/api/audit*` return **403**. `/admin` and `/api/admin*` do the same.
+
+Authorization uses the role stored in SQLite, not the copy inside the session cookie.
+
+## Audit gateway
+
+Every path that calls the model writes an audit row **before** the upstream request:
+
+- `POST /v1/predict` and `POST /predict` (console API key)
+- `POST /api/playground/predict` (signed-in session)
+
+If the audit insert fails, upstream is not called. The row stores account (user, email, org), key id / prefix / name, route, preset, IP, user agent, request JSON, then status, latency, and response JSON.
+
+The raw API secret and `LAYA_UPSTREAM_API_KEY` are never written. Failed authentication is logged without a request body; only a `laya_` prefix (12 characters) is kept when the presented token looks like a console key.
+
+Usage charts aggregate completed model calls from the same audit log. Members see their own rows. Admins can filter every account. Auth failures are excluded from usage.
+
+## Pages
+
+| Route | Who | What |
+| --- | --- | --- |
+| `/login`, `/register` | public | Email + password. httpOnly session cookie |
+| `/home` | signed in | Hero and quickstart. Copy installs the Laya skill prompt |
+| `/playground` | signed in | State JSON and presets `triage`, `email`, `guard`, `moderation`, `router` |
+| `/usage` | signed in | Daily request charts |
+| `/keys` | signed in | Create, reveal once (`laya_…`), list masked, revoke |
+| `/docs` | signed in | Quickstart, API reference, keys, presets |
+| `/audit` | admin | Filterable request trail |
+| `/admin` | admin | Change `member` / `admin` |
+| `/legal/terms`, `/legal/privacy`, `/legal/trust` | public | Short policy notes |
+
+Documentation in the sidebar opens `/docs`. The GitHub skill repo is mentioned only inside the quickstart as an optional install path.
+
+## Languages
+
+English and Simplified Chinese. The switcher is on the login / register panel and in the sidebar. The choice is stored in the `laya_lang` cookie (`en` or `zh-CN`). With no cookie, `Accept-Language` containing `zh` selects Chinese.
+
+## Setup
+
+```bash
+cp .env.local.example .env.local
+# Set SESSION_SECRET and, if you proxy upstream, LAYA_UPSTREAM_API_KEY.
+# Optional: ADMIN_EMAILS=you@example.com
+npm install
+npm run build
+./start.sh
+```
+
+`./start.sh` listens on `127.0.0.1:8787` (override with `PORT` / `HOST` in `.env.local`).
+
+```bash
+npm run dev    # same host and port, with reload
+```
+
+### Password helper
+
+```bash
+node scripts/set-password.mjs you@example.com 'a-long-password'
+```
+
+Creates the user if needed, or replaces the password hash. Honors `ADMIN_EMAILS` and `DATABASE_PATH`.
+
+### Create a key
+
+```bash
+node scripts/create-key.mjs http://127.0.0.1:8787 you@example.com 'a-long-password' "Production key"
+```
+
+### Call predict
+
+```bash
+curl -sS http://127.0.0.1:8787/v1/predict \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: $SECRET" \
+  -d '{"state":{"text":"order never arrived"},"preset":"triage"}'
+```
+
+`POST /predict` is the same handler. `GET /health` and `GET /api/health` do not require a key.
+
+## Environment
+
+| Variable | Purpose |
+| --- | --- |
+| `LAYA_UPSTREAM_URL` | Upstream base URL. Default `https://laya.wearglass.work` |
+| `LAYA_UPSTREAM_API_KEY` | Server-only key sent upstream. Never commit it |
+| `SESSION_SECRET` | HMAC secret for the session cookie |
+| `ADMIN_EMAILS` | Comma-separated admin emails |
+| `PORT` | Default `8787` |
+| `DATABASE_PATH` | SQLite file. Default `./data/laya-console.db` |
+
+Copy `.env.local.example` to `.env.local`. Do not commit `.env.local`, the database, or live secrets.
+
+## Data
+
+SQLite tables: `users` (including `role` and `password_hash`), `api_keys` (`key_hash`, `key_prefix`), `audit_events`.
+
+Display names: an email whose local part contains `hao` or `wei` is shown as **hao wei** / **hao's org** unless a name was entered at registration.
