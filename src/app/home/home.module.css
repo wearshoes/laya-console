@@ -15,6 +15,7 @@
   line-height: 0.85;
   letter-spacing: -0.07em;
   font-weight: 500;
+  color: #0a0a0a;
 }
 
 .titleLine {
@@ -45,7 +46,7 @@
   width: 100%;
   height: 100%;
   min-width: 0;
-  color: inherit;
+  color: #0a0a0a;
   text-decoration: none;
 }
 
@@ -765,26 +766,60 @@
   }
 }
 
-:global(html.dark) .page,
-:global(html.dark) .promptFrame {
+:global(html.dark) .page {
   background: #121214;
   color: #f4f4f5;
 }
 
-:global(html.dark) .cta,
+/* Hero band stays cream/light. Title must stay dark — never white on cream. */
+:global(html.dark) .desktopBanner,
+:global(html.dark) .mobileHero {
+  background: #f7f7f8;
+  color: #0a0a0a;
+  border-bottom-color: #e7e7e7;
+}
+
+:global(html.dark) .desktopBannerLink,
+:global(html.dark) .desktopBanner .title2xl,
+:global(html.dark) .mobileHero .title2xl,
+:global(html.dark) .desktopBanner .eyebrow,
+:global(html.dark) .mobileHero .eyebrow {
+  color: #0a0a0a;
+}
+
+:global(html.dark) .desktopBanner .eyebrow,
+:global(html.dark) .mobileHero .eyebrow {
+  color: #525252;
+}
+
+:global(html.dark) .desktopBanner .cta,
+:global(html.dark) .mobileHero .cta {
+  background: #0a0a0a;
+  color: #fff;
+}
+
+:global(html.dark) .artwork,
+:global(html.dark) .mobileArt {
+  filter: none;
+}
+
+:global(html.dark) .promptFrame {
+  background: #1a1a1e;
+  border-color: #3a3a42;
+  color: #f4f4f5;
+}
+
+:global(html.dark) .promptText {
+  color: #e4e4e7;
+}
+
 :global(html.dark) .copyButton {
   background: #f4f4f5;
   color: #111113;
 }
 
-:global(html.dark) .artwork,
-:global(html.dark) .mobileArt {
-  /* Keep the accepted triptych. Do not invert the banner. */
-  filter: none;
-}
-
 :global(html.dark) .cookbook {
-  color: #a1a1aa;
+  color: #c4c4cc;
 }
 
 :global(html.dark) .cookbook:hover,
@@ -798,7 +833,7 @@
 }
 
 :global(html.dark) .cookbookBody {
-  color: #c4c4cc;
+  color: #d4d4d8;
 }
 
 :global(html.dark) .demo {
@@ -806,7 +841,32 @@
   color: #171717;
 }
 
+:global(html.dark) .demoTitle {
+  color: #171717;
+}
+
+:global(html.dark) .demoDesc {
+  color: #404040;
+}
+
 :global(html.dark) .demoArtWide img,
 :global(html.dark) .demoArtCompact img {
   filter: none;
+}
+
+:global(html.dark) .utilities,
+:global(html.dark) .accountNav {
+  background: #121214;
+  border-color: #2e2e33;
+}
+
+:global(html.dark) .utilities a,
+:global(html.dark) .accountNav a {
+  color: #e4e4e7;
+  border-color: #2e2e33;
+}
+
+:global(html.dark) .utilities a:hover,
+:global(html.dark) .accountNav a:hover {
+  background: rgba(255, 255, 255, 0.04);
 }
