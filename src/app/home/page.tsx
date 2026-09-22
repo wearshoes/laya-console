@@ -135,41 +135,79 @@ export default function HomePage() {
           </div>
         </aside>
 
-        <section className={styles.inAction}>
-          <div className={styles.inActionHeader}>
-            <h2 className={styles.titleLg}>{t("home.inAction")}</h2>
-          </div>
-          <div className={styles.showcase}>
-            <div>
-              <div className={styles.cookbooks}>
-                {HOME_EDITORIAL.cookbooks.map((item) => (
-                  <article key={tx(item.title, "en")} className={styles.cookbook}>
-                    <ListIcon />
-                    <div>
-                      <strong>{tx(item.title, locale)}</strong>
-                      <p>{tx(item.body, locale)}</p>
-                    </div>
-                  </article>
-                ))}
+        <main className={styles.inAction}>
+          <div className={styles.inActionGrid}>
+            <div className={styles.cookbooksCol}>
+              <div className={styles.inActionHeader}>
+                <h2 className={styles.titleLg}>{t("home.inAction")}</h2>
               </div>
-              <Link href="/docs/patterns" className={styles.allCookbooks}>
-                {t("home.allCookbooks")} ↗
-              </Link>
-            </div>
-            <div className={styles.demos}>
-              {HOME_EDITORIAL.demos.map((item) => (
-                <Link key={item.preset} href={`/playground?preset=${item.preset}`} className={styles.demo}>
-                  <div className={styles.demoArt} />
-                  <div className={styles.demoBody}>
-                    <span>{item.preset}</span>
-                    <strong>{tx(item.title, locale)}</strong>
-                    <p>{tx(item.body, locale)}</p>
-                  </div>
+              <section className={styles.cookbooksSection} aria-label={t("home.cookbooks")}>
+                <h3 className={styles.srOnly}>{t("home.cookbooks")}</h3>
+                <ul className={styles.cookbookList}>
+                  {HOME_EDITORIAL.cookbooks.map((item) => {
+                    const name = tx(item.title, locale);
+                    return (
+                      <li key={tx(item.title, "en")} className="min-w-0">
+                        <Link
+                          href="/docs/patterns"
+                          className={styles.cookbookRow}
+                          aria-label={`${name}`}
+                        >
+                          <span className={styles.cookbookCopy}>
+                            <span className={styles.cookbookTitle}>{name}</span>
+                            <span className={styles.cookbookBody}>{tx(item.body, locale)}</span>
+                          </span>
+                          <span className={styles.cookbookAction} aria-hidden>
+                            Open ↗
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <Link href="/docs/patterns" className={styles.allCookbooks}>
+                  {t("home.allCookbooks")} ↗
                 </Link>
-              ))}
+              </section>
+            </div>
+
+            <div className={styles.demosCol}>
+              <section className={styles.demosSection} aria-label={t("home.demos")}>
+                <h3 className={styles.srOnly}>{t("home.demos")}</h3>
+                <ul className={styles.demoList}>
+                  {HOME_EDITORIAL.demos.map((item) => {
+                    const name = tx(item.title, locale);
+                    const wide = item.art === "wide";
+                    return (
+                      <li key={item.preset} className="min-w-0">
+                        <Link
+                          href={`/playground?preset=${item.preset}`}
+                          className={styles.demoCard}
+                          aria-label={`${t("home.playDemo")}: ${name}`}
+                        >
+                          <span className={wide ? styles.demoArtWide : styles.demoArtCompact}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={item.image} alt="" />
+                          </span>
+                          <span className={styles.demoBody}>
+                            <span className={styles.demoTitle}>{name}</span>
+                            <span className={styles.demoMeta}>
+                              <span className={styles.demoSoft}>{tx(item.body, locale)}</span>
+                              <span className={styles.demoPlay}>
+                                {t("home.playDemo")}
+                                <span aria-hidden>→</span>
+                              </span>
+                            </span>
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
             </div>
           </div>
-        </section>
+        </main>
 
         <nav className={styles.utilities} aria-label={t("home.docs")}>
           <Link href="/legal/privacy">
@@ -254,14 +292,6 @@ function PeopleIcon() {
       <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
       <circle cx="17" cy="10" r="2.2" />
       <path d="M16 19a4.5 4.5 0 0 1 4.5-4" />
-    </svg>
-  );
-}
-function ListIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a3a3a3" strokeWidth="1.6" aria-hidden>
-      <rect x="4" y="4" width="16" height="16" rx="2" />
-      <path d="M8 9h8M8 12h8M8 15h5" />
     </svg>
   );
 }
