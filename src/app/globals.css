@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --ink: #0a0a0a;
+  --line: #e7e7e7;
+  --blue: #2f6fed;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-white text-neutral-950 antialiased;
+}
+
+.field {
+  @apply h-12 w-full rounded-lg border border-neutral-300 bg-white px-3.5 text-[15px] outline-none transition duration-150;
+}
+
+.field:hover {
+  @apply border-neutral-400;
+}
+
+.field:focus {
+  @apply border-neutral-950 ring-4 ring-neutral-950/10;
+}
+
+.btn-black {
+  @apply inline-flex h-12 items-center justify-center rounded-lg bg-neutral-950 px-4 text-[15px] font-medium text-white transition duration-150 hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.btn-blue {
+  @apply inline-flex items-center justify-center rounded-md bg-[#2f6fed] px-4 text-sm font-medium text-white shadow-sm transition duration-150 hover:bg-[#245fe0];
+}
+
+.card {
+  @apply rounded-xl border border-neutral-200/90 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition duration-200;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+}
+
+.lift {
+  @apply transition duration-200;
+}
+
+.lift:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.modal-pop {
+  animation: modal-pop 160ms ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fade-in 180ms ease-out;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -48px;
+  z-index: 80;
+  border-radius: 8px;
+  background: #0a0a0a;
+  color: #fff;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body,
+html.dark .bg-white,
+html.dark .bg-\[\#f7f7f8\],
+html.dark .bg-\[\#f6f7f8\],
+html.dark .bg-\[\#fafafa\] {
+  background-color: #121214;
+  color: #f4f4f5;
+}
+
+html.dark .text-neutral-950,
+html.dark .text-neutral-900 {
+  color: #f4f4f5;
+}
+
+html.dark .text-neutral-800,
+html.dark .text-neutral-700 {
+  color: #e4e4e7;
+}
+
+html.dark .text-neutral-600,
+html.dark .text-neutral-500,
+html.dark .text-neutral-400 {
+  color: #a1a1aa;
+}
+
+html.dark .border-neutral-100,
+html.dark .border-neutral-200,
+html.dark .border-neutral-300 {
+  border-color: #2e2e33;
+}
+
+html.dark .bg-neutral-50,
+html.dark .bg-neutral-100,
+html.dark .hover\:bg-neutral-50:hover,
+html.dark .hover\:bg-neutral-100:hover {
+  background-color: #1c1c20;
+}
+
+html.dark .field,
+html.dark textarea,
+html.dark select {
+  background-color: #0e0e10;
+  color: #f4f4f5;
+  border-color: #3f3f46;
+}
+
+html.dark .card {
+  background-color: #18181b;
+  border-color: #2e2e33;
+}
+
+html.dark .btn-black,
+html.dark button.bg-neutral-950 {
+  background-color: #f4f4f5;
+  color: #111113;
+}
+
+html.dark .btn-black:hover,
+html.dark button.bg-neutral-950:hover {
+  background-color: #e4e4e7;
+}
+
+html.dark pre.bg-neutral-950 {
+  background-color: #09090b;
+  color: #f4f4f5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

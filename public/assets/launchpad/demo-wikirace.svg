@@ -1,0 +1,25 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="135.539" height="80" viewBox="0 0 135.539 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 3" opacity="0.6">
+<g id="Mask group">
+<mask id="mask0_0_19" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="136" height="80">
+<g id="Group">
+<path id="mask" d="M135.539 1.52588e-05H-4.76837e-06V80H135.539V1.52588e-05Z" fill="white"/>
+<path id="Vector" d="M13.6994 38.5996C21.0974 16.0612 30.5935 3.75322 41.9367 5.93161C58.4201 9.09712 67.465 39.1061 75.2798 65.1899" stroke="black" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M81.3778 62.1902C90.5944 35.9799 97.3951 29.6153 108.358 33.4086C115.31 35.8144 119.137 42.1454 122.472 50.6289" stroke="black" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</mask>
+<g mask="url(#mask0_0_19)">
+<path id="second-ring" d="M14.1288 43.7947C19.7614 43.7947 24.3274 41.736 24.3274 39.1965C24.3274 36.6569 19.7614 34.5982 14.1288 34.5982C8.49631 34.5982 3.93024 36.6569 3.93024 39.1965C3.93024 41.736 8.49631 43.7947 14.1288 43.7947Z" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="third-ring" d="M76.2574 71.0203C85.1642 71.0203 92.3846 68.7419 92.3846 65.9315C92.3846 63.121 85.1642 60.8427 76.2574 60.8427C67.3507 60.8427 60.1303 63.121 60.1303 65.9315C60.1303 68.7419 67.3507 71.0203 76.2574 71.0203Z" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="landing-ripple" d="M76.2574 75.5505C88.6772 75.5505 98.7454 71.3679 98.7454 66.2084C98.7454 61.0489 88.6772 56.8663 76.2574 56.8663C63.8377 56.8663 53.7695 61.0489 53.7695 66.2084C53.7695 71.3679 63.8377 75.5505 76.2574 75.5505Z" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="finish-ring" d="M122.472 55.5544C126.349 55.5544 129.493 53.9079 129.493 51.8768C129.493 49.8456 126.349 48.1991 122.472 48.1991C118.594 48.1991 115.45 49.8456 115.45 51.8768C115.45 53.9079 118.594 55.5544 122.472 55.5544Z" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+<path id="Vector_3" d="M13.6994 38.6002C21.0974 16.0618 30.5935 3.75382 41.9368 5.93221C58.4202 9.09771 67.465 39.1067 75.2798 65.1905" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M81.3778 62.191C90.5945 35.9806 97.3951 29.6161 108.358 33.4093C115.31 35.8151 119.137 42.1461 122.472 50.6296" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="action-marks">
+<path id="action-left" d="M7.69667 27.2434L9.63592 30.2912" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="action-top" d="M12.1366 22.8999L12.6576 28.9777" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</svg>
