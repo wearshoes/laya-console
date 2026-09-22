@@ -255,8 +255,8 @@ export const HOME_EDITORIAL = {
     {
       title: enzh("Parallel questions", "并行问题"),
       body: enzh(
-        "Runs a 13-question regulatory briefing over the GDPR Wikipedia article, showing that batching every question into one Laya call is 11.5x cheaper and 9.6x faster with no change in answers.",
-        "对 GDPR 维基百科文章跑 13 个监管简报问题：把所有问题打进一次 Laya 调用，成本约低 11.5 倍、速度约快 9.6 倍，答案不变。"
+        "Runs a 13-question regulatory briefing over the GDPR Wikipedia article, showing that batching every question into one TypeSafe call is 11.5x cheaper and 9.6x faster with no change in answers.",
+        "对 GDPR 维基百科文章跑 13 个监管简报问题：把所有问题打进一次 TypeSafe 调用，成本约低 11.5 倍、速度约快 9.6 倍，答案不变。"
       ),
     },
     {
@@ -269,15 +269,15 @@ export const HOME_EDITORIAL = {
     {
       title: enzh("Self-consistency", "自洽一致性"),
       body: enzh(
-        "Scores an auto-insurance claim against a 15-question adjudication rubric, showing that LLM answers vary run to run while Laya returns stable noul probabilities far faster and cheaper.",
-        "用 15 题裁定量表给车险理赔打分：普通 LLM 每次回答会漂，而 Laya 以更低成本更快返回稳定的 noul 概率。"
+        "Scores an auto-insurance claim against a 15-question adjudication rubric, showing that LLM answers vary run to run while TypeSafe returns stable noul probabilities far faster and cheaper.",
+        "用 15 题裁定量表给车险理赔打分：普通 LLM 每次回答会漂，而 TypeSafe 以更低成本更快返回稳定的 noul 概率。"
       ),
     },
     {
       title: enzh("Function calling", "函数调用"),
       body: enzh(
-        "Turns natural-language trading requests into calls to ordinary typed functions by mapping function names and closed-set arguments to confidence-aware Laya questions.",
-        "把自然语言交易请求映射成普通类型化函数调用：函数名与闭集参数对应到带置信度的 Laya 问题。"
+        "Turns natural-language trading requests into calls to ordinary typed functions by mapping function names and closed-set arguments to confidence-aware TypeSafe questions.",
+        "把自然语言交易请求映射成普通类型化函数调用：函数名与闭集参数对应到带置信度的 TypeSafe 问题。"
       ),
     },
   ],
@@ -285,14 +285,14 @@ export const HOME_EDITORIAL = {
     {
       preset: "router" as const,
       title: enzh("Wikirace", "维基竞速"),
-      body: enzh("How many hops will Laya take?", "Laya 需要跳几步？"),
+      body: enzh("How many hops will TypeSafe take?", "TypeSafe 需要跳几步？"),
       image: "/assets/launchpad/demo-wikirace.svg",
       art: "wide" as const,
     },
     {
       preset: "guard" as const,
       title: enzh("Smarthome", "智能家居"),
-      body: enzh("Laya controls appliances", "Laya 控制家电"),
+      body: enzh("TypeSafe controls appliances", "TypeSafe 控制家电"),
       image: "/assets/launchpad/demo-smart-home.svg",
       art: "compact" as const,
     },
