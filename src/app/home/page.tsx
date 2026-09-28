@@ -219,7 +219,7 @@ export default function HomePage() {
             <ReplayIcon />
             {t("home.replay")}
           </Link>
-          <a href="https://github.com/wearshoes/laya-console" target="_blank" rel="noreferrer">
+          <a href="https://laya.wearglass.work" target="_blank" rel="noreferrer">
             <PeopleIcon />
             {t("home.github")}
           </a>

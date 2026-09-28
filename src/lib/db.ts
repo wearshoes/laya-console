@@ -105,6 +105,14 @@ export function getDb(): Database.Database {
   if (!hasColumn(db, "users", "password_hash")) {
     db.exec(`ALTER TABLE users ADD COLUMN password_hash TEXT`);
   }
+  // Older local databases used user_email/client_ip and required a status on insert.
+  // Keep those databases usable while the current audit code writes email/ip.
+  if (!hasColumn(db, "audit_events", "email")) {
+    db.exec(`ALTER TABLE audit_events ADD COLUMN email TEXT`);
+  }
+  if (!hasColumn(db, "audit_events", "ip")) {
+    db.exec(`ALTER TABLE audit_events ADD COLUMN ip TEXT`);
+  }
 
   _db = db;
   return db;

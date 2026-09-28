@@ -75,15 +75,19 @@ export default function KeysPage() {
   }
 
   async function revoke(id: string) {
-    const res = await fetch(`/api/keys/${id}`, { method: "DELETE" });
-    const data = await res.json();
-    if (!res.ok) {
-      setError(data.error || "not_found");
-      return;
+    try {
+      const res = await fetch(`/api/keys/${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "not_found");
+        return;
+      }
+      setMenu(null);
+      setConfirmId(null);
+      await load();
+    } catch {
+      setError("generic");
     }
-    setMenu(null);
-    setConfirmId(null);
-    await load();
   }
 
   const filtered = keys
@@ -125,6 +129,7 @@ export default function KeysPage() {
       {error && <p className="mt-3 text-sm text-red-600">{t(`errors.${error}`)}</p>}
 
       <div className={styles.panel}>
+        <div className={styles.tableScroll}>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -170,6 +175,8 @@ export default function KeysPage() {
                       <button
                         type="button"
                         className="rounded px-2 py-1 text-neutral-500 hover:bg-neutral-100"
+                        aria-label={`Actions for ${k.name}`}
+                        aria-expanded={menu === k.id}
                         onClick={() => setMenu(menu === k.id ? null : k.id)}
                       >
                         ···
@@ -195,6 +202,7 @@ export default function KeysPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
       <p className={styles.footerNote}>{t("keys.footer")}</p>
 
@@ -259,11 +267,13 @@ export default function KeysPage() {
               </label>
               <input
                 id="key-name"
+                name="keyName"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={t("keys.placeholder")}
                 className="field mt-1.5"
                 autoFocus
+                autoComplete="off"
               />
               <div className="mt-5 flex justify-end">
                 <button type="submit" disabled={creating} className="btn-black h-10 px-4 text-sm">

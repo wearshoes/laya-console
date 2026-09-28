@@ -53,8 +53,11 @@ export function LoginForm({ returnTo }: { returnTo: string }) {
         </label>
         <input
           id="email"
+          name="email"
           type="email"
           autoComplete="email"
+          autoCapitalize="none"
+          inputMode="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -67,6 +70,7 @@ export function LoginForm({ returnTo }: { returnTo: string }) {
           </label>
           <input
             id="password"
+            name="password"
             type={show ? "text" : "password"}
             autoComplete="current-password"
             required
@@ -77,6 +81,7 @@ export function LoginForm({ returnTo }: { returnTo: string }) {
           />
           <button
             type="button"
+            aria-label={show ? "Hide password" : "Show password"}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-neutral-500"
             onClick={() => setShow((v) => !v)}
           >

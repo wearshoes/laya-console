@@ -36,8 +36,8 @@ export function beginAudit(meta: AuditMeta, request: unknown, preset: string | n
       .prepare(
         `INSERT INTO audit_events (
            user_id, email, org, api_key_id, key_prefix, key_name, route, preset,
-           ip, user_agent, request_json, auth_failure
-         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)`
+           status, ip, user_agent, request_json, auth_failure
+         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, 0)`
       )
       .run(
         meta.userId,

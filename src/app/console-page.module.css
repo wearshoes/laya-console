@@ -1,4 +1,4 @@
-/* Shared Jev-style console page chrome for Usage/Keys/Settings/Billing stubs. */
+/* Shared Laya console page chrome for Usage/Keys/Settings/Billing surfaces. */
 
 .page {
   display: flex;
@@ -176,6 +176,14 @@
   width: 100%;
   text-align: left;
   font-size: 0.875rem;
+}
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.tableScroll .table {
+  min-width: 44rem;
 }
 
 .table thead {

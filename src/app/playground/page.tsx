@@ -7,14 +7,53 @@ import { JsonEditor } from "@/components/JsonEditor";
 import { Modal } from "@/components/Modal";
 import { useI18n } from "@/components/LocaleProvider";
 import { copyText } from "@/lib/copy-text";
-import { DEFAULT_STATE, PRESET_IDS, PRESET_STATES, type PresetId } from "@/lib/prompts";
+import { PRESET_IDS, PRESET_STATES, type PresetId } from "@/lib/prompts";
 import styles from "./playground.module.css";
 
 type ViewMode = "cards" | "json" | "plain";
 
+const PLAYGROUND_PRIMITIVES: Record<PresetId, { label: string; blurb: string; example: string; hint: string }> = {
+  triage: { label: "Noul", blurb: "Evaluate how true something is", example: 'Is `food` a sandwich?', hint: "Evaluate a claim against the state." },
+  email: { label: "Score", blurb: "Set up a rubric to grade with", example: 'How much did `subject` contribute?', hint: "Return a calibrated score." },
+  guard: { label: "Choice", blurb: "Ask a multiple choice question", example: 'What color is `object`?', hint: "Choose one option from a list." },
+  moderation: { label: "Moderation", blurb: "Review a user comment", example: "Should this comment be escalated?", hint: "Classify a piece of text." },
+  router: { label: "Router", blurb: "Pick the next agent tool", example: "Which tool should handle this?", hint: "Route the next action." },
+};
+
+const PLAYGROUND_CASES: { id: PresetId; title: string; body: string }[] = [
+  { id: "triage", title: "Resumé screening", body: "Assess an engineering candidate" },
+  { id: "email", title: "Support agent audit", body: "Audit a customer support agent's chat session" },
+  { id: "guard", title: "LLM guardrails", body: "Detect jailbreak attempts and assess potential harm" },
+];
+
+const PRIMITIVE_QUESTIONS: Partial<Record<PresetId, Record<string, unknown>>> = {
+  triage: {
+    new_noul_1: {
+      type: "noul",
+      instructions: "Ask a yes or no question",
+      criteria: { true: "", false: "" },
+    },
+  },
+  email: {
+    new_score_1: {
+      type: "score",
+      instructions: "Where does the state fall on the scale?",
+      criteria: ["Lowest level of one dimension", "Middle level of the same dimension", "Highest level of the same dimension"],
+    },
+  },
+  guard: {
+    new_choice_1: {
+      type: "choice",
+      instructions: "Which option best fits the state?",
+      criteria: { option_a: "Description of an option", option_b: "Another description of a distinct option", option_c: "Another mutually exclusive option" },
+    },
+  },
+};
+
 function PlaygroundInner() {
   const { t } = useI18n();
-  const [stateText, setStateText] = useState(JSON.stringify(DEFAULT_STATE, null, 2));
+  const [stateText, setStateText] = useState(JSON.stringify({ example_state: "Add context for Laya to evaluate" }, null, 2));
+  const [questionsText, setQuestionsText] = useState("{}");
   const [preset, setPreset] = useState<PresetId>("triage");
   const [custom, setCustom] = useState("");
   const [useCustom, setUseCustom] = useState(false);
@@ -61,25 +100,40 @@ function PlaygroundInner() {
   }, [custom, useCustom]);
 
   const questionCount = useMemo(() => {
-    if (!useCustom) return 1;
     try {
-      const parsed = JSON.parse(custom);
-      return Array.isArray(parsed) ? parsed.length : 1;
+      return Object.keys(JSON.parse(questionsText)).length;
     } catch {
       return 0;
     }
-  }, [custom, useCustom]);
+  }, [questionsText]);
+
+  const questionsValid = useMemo(() => {
+    try {
+      const parsed = JSON.parse(questionsText);
+      return Boolean(parsed && typeof parsed === "object" && !Array.isArray(parsed));
+    } catch {
+      return false;
+    }
+  }, [questionsText]);
 
   function applyPreset(id: PresetId) {
     setPreset(id);
     setUseCustom(false);
     setStateText(JSON.stringify(PRESET_STATES[id], null, 2));
+    setQuestionsText(JSON.stringify(PRIMITIVE_QUESTIONS[id] || {}, null, 2));
+  }
+
+  function applyPrimitive(id: PresetId) {
+    setPreset(id);
+    setUseCustom(false);
+    setQuestionsText(JSON.stringify(PRIMITIVE_QUESTIONS[id] || {}, null, 2));
   }
 
   function formatJson() {
     try {
       if (useCustom) setCustom(JSON.stringify(JSON.parse(custom), null, 2));
       else setStateText(JSON.stringify(JSON.parse(stateText), null, 2));
+      setQuestionsText(JSON.stringify(JSON.parse(questionsText), null, 2));
     } catch {
       /* keep invalid text visible */
     }
@@ -88,6 +142,7 @@ function PlaygroundInner() {
   function clearAll() {
     applyPreset("triage");
     setCustom("");
+    setQuestionsText("{}");
     setResponse(null);
     setError(null);
     setShowExamples(true);
@@ -127,6 +182,7 @@ function PlaygroundInner() {
       const state = JSON.parse(stateText);
       const body: Record<string, unknown> = { state };
       if (useCustom) body.questions = JSON.parse(custom);
+      else if (questionCount > 0) body.questions = JSON.parse(questionsText);
       else body.preset = preset;
       const res = await fetch("/api/playground/predict", {
         method: "POST",
@@ -179,7 +235,7 @@ function PlaygroundInner() {
                 {stateValid ? t("playground.ready") : t("playground.invalid")}
               </span>
             </div>
-            <JsonEditor value={stateText} onChange={setStateText} />
+              <JsonEditor value={stateText} onChange={setStateText} />
           </div>
 
           <div className={styles.questions}>
@@ -202,6 +258,8 @@ function PlaygroundInner() {
               </Link>
             </div>
 
+            <JsonEditor value={questionsText} onChange={setQuestionsText} rows={8} />
+
             <div className={styles.presetList}>
               {useCustom ? (
                 <textarea
@@ -216,11 +274,11 @@ function PlaygroundInner() {
                   <button
                     key={id}
                     type="button"
-                    onClick={() => applyPreset(id)}
+                    onClick={() => applyPrimitive(id)}
                     className={`${styles.presetCard} ${preset === id ? styles.presetCardActive : ""}`}
                   >
-                    <div className={styles.presetLabel}>{t(`presets.${id}.label`)}</div>
-                    <p className={styles.presetBlurb}>{t(`presets.${id}.blurb`)}</p>
+                    <div className={styles.presetLabel}>{PLAYGROUND_PRIMITIVES[id].label}</div>
+                    <p className={styles.presetBlurb}>{PLAYGROUND_PRIMITIVES[id].blurb}</p>
                   </button>
                 ))
               )}
@@ -239,7 +297,7 @@ function PlaygroundInner() {
               <button
                 type="button"
                 onClick={run}
-                disabled={loading || !stateValid || !customValid}
+                disabled={loading || !stateValid || !customValid || !questionsValid}
                 className={styles.runBtn}
               >
                 {loading ? t("playground.running") : t("playground.run")}
@@ -328,7 +386,7 @@ function PlaygroundInner() {
 
 function Examples({ onPick }: { onPick: (id: PresetId) => void }) {
   const { t } = useI18n();
-  const cards: PresetId[] = ["triage", "guard", "router"];
+  const cards: PresetId[] = ["triage", "email", "guard"];
   return (
     <div className={styles.examples}>
       <div className={styles.examplesHead}>
@@ -343,20 +401,20 @@ function Examples({ onPick }: { onPick: (id: PresetId) => void }) {
           <button key={id} type="button" onClick={() => onPick(id)} className={styles.walkCard}>
             <div className={`${styles.walkArt} ${styles[`walkArt${index + 1}` as "walkArt1" | "walkArt2" | "walkArt3"]}`} />
             <div className={styles.walkBody}>
-              <p className={styles.walkKicker}>{t(`presets.${id}.label`)}</p>
-              <p className={styles.walkExample}>{t(`presets.${id}.example`)}</p>
-              <p className={styles.walkHint}>{t(`presets.${id}.hint`)}</p>
+              <p className={styles.walkKicker}>{PLAYGROUND_PRIMITIVES[id].label}</p>
+              <p className={styles.walkExample}>{PLAYGROUND_PRIMITIVES[id].example}</p>
+              <p className={styles.walkHint}>{PLAYGROUND_PRIMITIVES[id].hint}</p>
             </div>
           </button>
         ))}
       </div>
       <p className={styles.sectionLabel}>{t("playground.cases")}</p>
       <ul className={styles.caseList}>
-        {PRESET_IDS.map((id) => (
+        {PLAYGROUND_CASES.map(({ id, title, body }) => (
           <li key={id}>
             <button type="button" onClick={() => onPick(id)} className={styles.caseBtn}>
-              <span className={styles.caseLabel}>{t(`presets.${id}.label`)}</span>
-              <span className={styles.caseText}>{t(`cases.${id}`)}</span>
+              <span className={styles.caseLabel}>{title}</span>
+              <span className={styles.caseText}>{body}</span>
             </button>
           </li>
         ))}

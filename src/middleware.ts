@@ -26,6 +26,15 @@ export function middleware(req: NextRequest) {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("returnTo", pathname);
+    const forwardedProto = req.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
+    const forwardedHost = req.headers.get("x-forwarded-host")?.split(",")[0]?.trim() || req.headers.get("host");
+    if (forwardedHost?.includes("laya.wearglass.work")) {
+      url.hostname = "laya.wearglass.work";
+      url.port = "";
+    } else if (forwardedHost) {
+      url.host = forwardedProto === "https" ? forwardedHost.replace(/:\d+$/, "") : forwardedHost;
+    }
+    if (forwardedProto === "http" || forwardedProto === "https") url.protocol = `${forwardedProto}:`;
     return NextResponse.redirect(url);
   }
   return NextResponse.next();

@@ -1,4 +1,4 @@
-/* Home launchpad: TypeSafe/Jev structure + assets as base; Laya chrome branding. */
+/* Home launchpad chrome and source demo art. */
 
 .page {
   display: flex;
@@ -322,7 +322,7 @@
   min-height: 0;
 }
 
-/* Mirrors TypeSafe: mx-auto grid max-w-300 xl:grid-cols-3 gap-x-2 gap-y-6 */
+/* Responsive launchpad grid. */
 .showcase {
   display: grid;
   grid-template-columns: 1fr;
@@ -463,7 +463,7 @@
   overflow: hidden;
   border: 0;
   padding: 0;
-  background: #f4f1ea; /* soft cream surface-soft like TypeSafe */
+  background: #f4f1ea; /* soft neutral showcase surface */
   text-align: left;
   text-decoration: none;
   color: inherit;

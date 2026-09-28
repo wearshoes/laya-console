@@ -112,7 +112,7 @@ export const en = {
     playDemo: "Play demo",
     cookbooks: "Cookbooks",
     demos: "Demos",
-    github: "Join us on GitHub",
+    github: "Laya runtime",
     replay: "Replay intro",
   },
   presets: {
@@ -660,7 +660,7 @@ export const zhCN: Dict = {
     playDemo: "播放演示",
     cookbooks: "做法",
     demos: "演示",
-    github: "加入 GitHub",
+    github: "Laya 运行时",
     replay: "重看介绍",
   },
   presets: {

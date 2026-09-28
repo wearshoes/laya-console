@@ -8,16 +8,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const jar = await cookies();
   const locale = resolveLocale(jar.get("laya_lang")?.value, null);
   return {
-    title: "TypeSafe AI",
-    description:
-      "TypeSafe AI is an AI lab building machine-native intelligence infrastructure for automation, designed to make decisions within software.",
-    metadataBase: new URL("https://typesafe.ai"),
+    title: "Laya Console",
+    description: "Wearshoes Laya Console for typed decisions, API keys, usage, and audit.",
+    metadataBase: new URL("https://laya.wearglass.work"),
     alternates: { canonical: "/" },
     openGraph: {
-      title: "TypeSafe AI",
-      description: "Machine-native intelligence for automation.",
-      url: "https://typesafe.ai/",
-      siteName: "TypeSafe AI",
+      title: "Laya Console",
+      description: "Typed decisions, API keys, usage, and audit for Laya.",
+      url: "https://laya.wearglass.work/",
+      siteName: "Laya Console",
       type: "website",
     },
   };

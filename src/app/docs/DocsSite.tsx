@@ -78,7 +78,7 @@ export function DocsChrome({ children }: { children: ReactNode }) {
   return (
     <div className={styles.site} data-theme={theme}>
       <header className={styles.header}>
-        <button type="button" className={styles.menuBtn} aria-label={tx(DOCS_UI.menu, locale)} onClick={() => setOpen((value) => !value)}>
+        <button type="button" className={styles.menuBtn} aria-label={tx(DOCS_UI.menu, locale)} aria-expanded={open} onClick={() => setOpen((value) => !value)}>
           ☰
         </button>
         <Link href="/docs" className={styles.brand}>
