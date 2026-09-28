@@ -8,11 +8,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const jar = await cookies();
   const locale = resolveLocale(jar.get("laya_lang")?.value, null);
   return {
-    title: locale === "zh-CN" ? "Laya 控制台" : "Laya Console",
+    title: "TypeSafe AI",
     description:
-      locale === "zh-CN"
-        ? "Wearglass Laya 控制台：类型化决策、API 密钥、用量与审计。"
-        : "Wearglass Laya console for typed decisions, API keys, usage, and audit.",
+      "TypeSafe AI is an AI lab building machine-native intelligence infrastructure for automation, designed to make decisions within software.",
+    metadataBase: new URL("https://typesafe.ai"),
+    alternates: { canonical: "/" },
+    openGraph: {
+      title: "TypeSafe AI",
+      description: "Machine-native intelligence for automation.",
+      url: "https://typesafe.ai/",
+      siteName: "TypeSafe AI",
+      type: "website",
+    },
   };
 }
 
