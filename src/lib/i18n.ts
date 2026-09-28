@@ -344,7 +344,7 @@ export const en = {
         ),
         block(
           "Optional skill install",
-          "Agents can install the Wearglass Laya skill. This is optional. The console API works without it. One install path is npx skills add wearshoes/laya-skills --skill laya-ai. The skill repository is an install option: https://github.com/wearshoes/laya-skills"
+          "Agents can install the Wearglass Laya skill. This is optional. The console API works without it. One install path is Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart. The skill repository is an install option: https://laya.wearglass.work/docs/quickstart"
         ),
         block(
           "Try it in the playground",
@@ -479,14 +479,14 @@ GET /health`
         ),
         block(
           "Install",
-          "Use one install path. Claude Code: claude plugin marketplace add wearshoes/laya-skills, then claude plugin install laya-ai@wearshoes/laya-skills. Other agents: npx skills add wearshoes/laya-skills --skill laya-ai.",
-          `npx skills add wearshoes/laya-skills --skill laya-ai`
+          "Use one install path. Claude Code: Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart. Other agents: Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart.",
+          `Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart`
         ),
         block(
           "Read the skill",
           "SKILL.md lives in the public skill repository. Point agents at it when you want them to draft predict calls against this console.",
-          `https://github.com/wearshoes/laya-skills
-https://github.com/wearshoes/wearglass-skills/blob/main/skills/laya-ai/SKILL.md`
+          `https://laya.wearglass.work/docs/quickstart
+https://laya.wearglass.work/docs/quickstart`
         ),
         block(
           "Runtime pairing",
@@ -892,7 +892,7 @@ export const zhCN: Dict = {
         ),
         block(
           "可选的技能安装",
-          "代理可以安装 Wearglass 的 Laya 技能。这是可选项，不用它也能调用控制台 API。一种安装方式是 npx skills add wearshoes/laya-skills --skill laya-ai。技能仓库只是安装入口：https://github.com/wearshoes/laya-skills"
+          "代理可以安装 Wearglass 的 Laya 技能。这是可选项，不用它也能调用控制台 API。一种安装方式是 Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart。技能仓库只是安装入口：https://laya.wearglass.work/docs/quickstart"
         ),
         block(
           "在试验场试一次",
@@ -1027,14 +1027,14 @@ GET /health`
         ),
         block(
           "安装",
-          "只用一种安装路径。Claude Code：claude plugin marketplace add wearshoes/laya-skills，然后 claude plugin install laya-ai@wearshoes/laya-skills。其他代理：npx skills add wearshoes/laya-skills --skill laya-ai。",
-          `npx skills add wearshoes/laya-skills --skill laya-ai`
+          "只用一种安装路径。Claude Code：Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart，然后阅读 Laya 设置指南。其他代理：Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart。",
+          `Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart`
         ),
         block(
           "阅读技能",
           "SKILL.md 在公开技能仓库中。需要代理起草对本控制台的 predict 调用时，把仓库指给它。",
-          `https://github.com/wearshoes/laya-skills
-https://github.com/wearshoes/wearglass-skills/blob/main/skills/laya-ai/SKILL.md`
+          `https://laya.wearglass.work/docs/quickstart
+https://laya.wearglass.work/docs/quickstart`
         ),
         block(
           "与运行时配对",

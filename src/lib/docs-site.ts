@@ -168,10 +168,10 @@ const PAGES: DocEntry[] = [
         "当任务是路由、分诊、防护或审核时，让代理使用类型化决策。要求它把副作用留在你的代码里，并由它自己设定概率门槛。"
       ),
       h2("Install one way", "只选一种安装方式"),
-      code(`npx skills add wearshoes/laya-skills --skill laya-ai`),
+      code(`Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart`),
       p(
-        "Claude Code can use the plugin marketplace instead: add wearshoes/laya-skills, then install laya-ai. Do not run both installers.",
-        "Claude Code 也可以走插件市场：添加 wearshoes/laya-skills，再安装 laya-ai。不要两种安装器一起跑。"
+        "Claude Code can use the plugin marketplace instead: add laya/laya-skills, then install laya-ai. Do not run both installers.",
+        "Claude Code 也可以走插件市场：添加 laya/laya-skills，再安装 laya-ai。不要两种安装器一起跑。"
       ),
       h2("What the agent should call", "代理应该调用什么"),
       ul([
@@ -179,8 +179,8 @@ const PAGES: DocEntry[] = [
         bi("Hosted runtime: POST https://laya.wearglass.work/predict with LAYA_API_KEY, same JSON body.", "托管运行时：用 LAYA_API_KEY POST https://laya.wearglass.work/predict，JSON 体相同。"),
       ]),
       p(
-        "Read [SKILL.md](https://github.com/wearshoes/wearglass-skills/blob/main/skills/laya-ai/SKILL.md) or the [skill page](/docs/skill). The skill repository is an install option, not a second API.",
-        "阅读 [SKILL.md](https://github.com/wearshoes/wearglass-skills/blob/main/skills/laya-ai/SKILL.md) 或[技能页](/docs/skill)。技能仓库只是安装入口，不是第二套 API。"
+        "Read [SKILL.md](https://laya.wearglass.work/docs/quickstart) or the [skill page](/docs/skill). The skill repository is an install option, not a second API.",
+        "阅读 [SKILL.md](https://laya.wearglass.work/docs/quickstart) 或[技能页](/docs/skill)。技能仓库只是安装入口，不是第二套 API。"
       ),
     ],
   },
@@ -1018,14 +1018,14 @@ else handToHuman(data);`),
     ),
     blocks: [
       h2("Install", "安装"),
-      code(`npx skills add wearshoes/laya-skills --skill laya-ai`),
+      code(`Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart`),
       p(
-        "Claude Code alternative, and only one of these: claude plugin marketplace add wearshoes/laya-skills, then claude plugin install laya-ai@wearshoes/laya-skills.",
-        "Claude Code 的替代方式，二选一：claude plugin marketplace add wearshoes/laya-skills，然后 claude plugin install laya-ai@wearshoes/laya-skills。"
+        "Claude Code alternative, and only one of these: Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart.",
+        "Claude Code 的替代方式，二选一：Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart，然后阅读 Laya 设置指南。"
       ),
       h2("Read it", "阅读"),
-      code(`https://github.com/wearshoes/laya-skills
-https://github.com/wearshoes/wearglass-skills/blob/main/skills/laya-ai/SKILL.md`),
+      code(`https://laya.wearglass.work/docs/quickstart
+https://laya.wearglass.work/docs/quickstart`),
       h2("Pair it with a key", "与密钥配对"),
       p(
         "Set LAYA_API_KEY when the agent should call the hosted runtime directly. Set a console laya_ key when the agent should call this console so usage and audit stay here.",

@@ -1,7 +1,7 @@
-export const LAYA_AGENT_INSTALL_PROMPT = `Install the Laya skill. If you're in Claude Code, run \`claude plugin marketplace add wearshoes/laya-skills\`, then \`claude plugin install laya-ai@wearshoes/laya-skills\`. If you're in another agent, run \`npx skills add wearshoes/laya-skills --skill laya-ai\` and select your agent. Use one installation method. You can read the skill at https://github.com/wearshoes/laya-skills or https://github.com/wearshoes/wearglass-skills/blob/main/skills/laya-ai/SKILL.md. Then use the Laya skill for fast typed decisions (routing, triage, guardrails, moderation) via https://laya.wearglass.work with LAYA_API_KEY.`;
+export const LAYA_AGENT_INSTALL_PROMPT = `Read the Laya setup guide at https://laya.wearglass.work/docs/quickstart, then use the Laya skill for typed decisions (routing, triage, guardrails, and moderation) via https://laya.wearglass.work with LAYA_API_KEY.`;
 
 export const SKILL_MD_URL =
-  "https://github.com/wearshoes/wearglass-skills/blob/main/skills/laya-ai/SKILL.md";
+  "https://laya.wearglass.work/docs/quickstart";
 
 export const PRESET_IDS = ["triage", "email", "guard", "moderation", "router"] as const;
 export type PresetId = (typeof PRESET_IDS)[number];

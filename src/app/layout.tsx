@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = resolveLocale(jar.get("laya_lang")?.value, null);
   return {
     title: "Laya Console",
-    description: "Wearshoes Laya Console for typed decisions, API keys, usage, and audit.",
+    description: "Laya Console for typed decisions, API keys, usage, and audit.",
     metadataBase: new URL("https://laya.wearglass.work"),
     alternates: { canonical: "/" },
     openGraph: {
