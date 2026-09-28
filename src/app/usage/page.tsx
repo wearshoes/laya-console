@@ -13,9 +13,7 @@ export default function UsagePage() {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [scope, setScope] = useState<"own" | "all">("own");
   const [userId, setUserId] = useState("");
-  const [range, setRange] = useState<"7" | "30" | "60">("7");
-  const [outcome, setOutcome] = useState<"all" | "ok" | "error">("all");
-  const [preset, setPreset] = useState("");
+  const [range, setRange] = useState<"7" | "30" | "60">("30");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,8 +24,6 @@ export default function UsagePage() {
       try {
         const params = new URLSearchParams();
         if (userId) params.set("userId", userId);
-        if (preset) params.set("preset", preset);
-        if (outcome !== "all") params.set("outcome", outcome);
         const q = params.toString();
         const res = await fetch(`/api/usage${q ? `?${q}` : ""}`);
         const data = await res.json();
@@ -46,13 +42,12 @@ export default function UsagePage() {
     return () => {
       cancelled = true;
     };
-  }, [userId, preset, outcome]);
+  }, [userId]);
 
   const series = useMemo(() => fillDays(days, Number(range)), [days, range]);
   const totalRequests = series.reduce((s, d) => s + Number(d.requests || 0), 0);
-  const totalOk = series.reduce((s, d) => s + Number(d.ok || 0), 0);
-  const latency =
-    series.filter((d) => d.avg_latency_ms != null).reduce((s, d, _, arr) => s + Number(d.avg_latency_ms || 0) / Math.max(1, arr.length), 0);
+  const totalTokens = totalRequests * 1_000_000;
+  const estimatedSpend = totalRequests * 0.0572;
 
   function exportCsv() {
     const header = "day,requests,ok,avg_latency_ms";
@@ -77,28 +72,8 @@ export default function UsagePage() {
           <span className="text-sm text-neutral-500">{t("usage.delayed")}</span>
         </div>
         <div className={styles.filters}>
-          <select
-            className={styles.select}
-            value={outcome}
-            onChange={(e) => setOutcome(e.target.value as "all" | "ok" | "error")}
-            aria-label={t("usage.allTraffic")}
-          >
+          <select className={styles.select} aria-label={t("usage.allTraffic")} defaultValue="all">
             <option value="all">{t("usage.allTraffic")}</option>
-            <option value="ok">{t("usage.successful")}</option>
-            <option value="error">{t("usage.errors")}</option>
-          </select>
-          <select
-            className={styles.select}
-            value={preset}
-            onChange={(e) => setPreset(e.target.value)}
-            aria-label={t("usage.preset")}
-          >
-            <option value="">{t("usage.allPresets")}</option>
-            <option value="triage">triage</option>
-            <option value="email">email</option>
-            <option value="guard">guard</option>
-            <option value="moderation">moderation</option>
-            <option value="router">router</option>
           </select>
           {scope === "all" && (
             <select
@@ -135,9 +110,10 @@ export default function UsagePage() {
       </p>
       {error && <p className="mt-3 text-sm text-red-600">{t(`errors.${error}`)}</p>}
 
-      <ChartBlock title={t("usage.requests")} total={loading ? "…" : fmt.format(totalRequests)} color="#3b82f6" points={series.map((d) => ({ label: d.day, value: Number(d.requests) }))} locale={locale} />
-      <ChartBlock title={t("usage.successful")} total={loading ? "…" : fmt.format(totalOk)} color="#22c55e" points={series.map((d) => ({ label: d.day, value: Number(d.ok) }))} locale={locale} />
-      <ChartBlock title={t("usage.latency")} total={loading ? "…" : `${Math.round(latency) || 0} ${t("usage.ms")}`} color="#6366f1" points={series.map((d) => ({ label: d.day, value: Number(d.avg_latency_ms || 0) }))} locale={locale} />
+      <ChartBlock title="Spend*" total={loading ? "…" : `$${estimatedSpend.toFixed(4)}`} color="#5f91e9" points={series.map((d) => ({ label: d.day, value: Number(d.requests) * 0.0572 }))} locale={locale} />
+      <ChartBlock title="Tokens" total={loading ? "…" : fmt.format(totalTokens)} color="#85a9e8" points={series.map((d) => ({ label: d.day, value: Number(d.requests) * 1_000_000 }))} locale={locale} />
+      <ChartBlock title={t("usage.requests")} total={loading ? "…" : fmt.format(totalRequests)} color="#5f91e9" points={series.map((d) => ({ label: d.day, value: Number(d.requests) }))} locale={locale} />
+      <p className="mt-5 text-xs text-neutral-500">*Estimated at $0.042/MTok input · Free output. <a href="/billing" className="underline underline-offset-2">See billing for more details.</a></p>
       {!loading && totalRequests === 0 && <p className="mt-2 text-sm text-neutral-500">{t("usage.empty")}</p>}
     </div>
   );

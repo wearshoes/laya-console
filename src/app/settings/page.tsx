@@ -1,11 +1,13 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useI18n } from "@/components/LocaleProvider";
 import styles from "../console-page.module.css";
+import modalStyles from "./settings.module.css";
 
 export default function SettingsPage() {
   const { t } = useI18n();
@@ -49,10 +51,21 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className={styles.page}>
-      <p className={styles.kicker}>{t("nav.settings")}</p>
-      <h1 className={styles.titleLg}>{t("settings.title")}</h1>
-      <p className={styles.lede}>{t("settings.lede")}</p>
+    <div className={modalStyles.overlay}>
+      <div className={modalStyles.dialog} role="dialog" aria-modal="true" aria-label={t("settings.title")}>
+        <aside className={modalStyles.nav}>
+          <div className={modalStyles.navTitle}><span>×</span>{t("nav.settings")}</div>
+          <Link className={modalStyles.navActive} href="/settings">{t("nav.settings")}</Link>
+          <Link href="/org">{t("nav.org")}</Link>
+          <Link href="/admin">{t("nav.team")}</Link>
+          <Link href="/shares">Shares</Link>
+          <Link href="/billing">{t("nav.billing")}</Link>
+        </aside>
+        <main className={modalStyles.content}>
+          <div className={modalStyles.contentHead}>
+            <h1>{t("settings.title")}</h1>
+            <Link href="/home" aria-label="Close settings">×</Link>
+          </div>
       {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
 
       <form onSubmit={onSubmit} className={`${styles.panel} ${styles.panelPad} ${styles.stack}`}>
@@ -84,6 +97,8 @@ export default function SettingsPage() {
           <LanguageSwitcher />
         </div>
       </section>
+        </main>
+      </div>
     </div>
   );
 }
