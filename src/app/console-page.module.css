@@ -252,6 +252,56 @@
   font-weight: 500;
 }
 
+.keysPage .head {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.keysPage .titleRow svg {
+  display: none;
+}
+
+.keysPage .title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.keysPage .hint {
+  display: none;
+}
+
+.keysPage .head > button {
+  height: 2rem;
+  padding: 0 0.75rem;
+}
+
+.keysPage .search {
+  width: 16rem;
+  height: 2.25rem;
+  margin-top: 0.75rem;
+}
+
+.keysPage .panel {
+  margin-top: 0.75rem;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+}
+
+.keysPage .tableScroll {
+  overflow-x: auto;
+}
+
+.keysPage .table {
+  min-width: 52rem;
+}
+
+.keysPage .table th,
+.keysPage .table td {
+  padding: 0.65rem 0.75rem;
+}
+
 :global(html.dark) .page {
   background: #121214;
   color: #f4f4f5;

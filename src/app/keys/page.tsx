@@ -99,7 +99,7 @@ export default function KeysPage() {
     });
 
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} ${styles.keysPage}`}>
       <div className={styles.head}>
         <div>
           <div className={styles.titleRow}>
