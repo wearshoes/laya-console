@@ -121,12 +121,16 @@ function PlaygroundInner() {
     setUseCustom(false);
     setStateText(JSON.stringify(PRESET_STATES[id], null, 2));
     setQuestionsText(JSON.stringify(PRIMITIVE_QUESTIONS[id] || {}, null, 2));
+    setResponse(null);
+    setShowExamples(false);
   }
 
   function applyPrimitive(id: PresetId) {
     setPreset(id);
     setUseCustom(false);
     setQuestionsText(JSON.stringify(PRIMITIVE_QUESTIONS[id] || {}, null, 2));
+    setResponse(null);
+    setShowExamples(false);
   }
 
   function formatJson() {
@@ -307,12 +311,14 @@ function PlaygroundInner() {
         </section>
 
         <section className={styles.right} aria-label={t("playground.examples")}>
-          {showExamples || response == null ? (
+          {showExamples ? (
             <Examples onPick={applyPreset} />
           ) : (
             <div className="flex min-h-0 flex-1 flex-col">
               <div className={styles.responseHead}>
                 <h2 className={styles.panelTitle}>{t("playground.response")}</h2>
+                <span className={styles.responseMode}>{response == null ? "Preview" : "Result"}</span>
+                {response == null && <span className={styles.responseHint}>Run request to see output</span>}
                 {error && <span className={styles.statusBad}>{error}</span>}
                 <div className="ml-auto flex items-center gap-1">
                   <button
@@ -342,7 +348,9 @@ function PlaygroundInner() {
                 </div>
               </div>
               <div className={styles.responseBody}>
-                {view === "cards" ? (
+                {response == null ? (
+                  <QuestionPreview questions={questionsText} />
+                ) : view === "cards" ? (
                   <AnswerCards data={response} />
                 ) : (
                   <pre className={styles.answerValue}>
@@ -382,6 +390,25 @@ function PlaygroundInner() {
       )}
     </div>
   );
+}
+
+function QuestionPreview({ questions }: { questions: string }) {
+  let entries: [string, Record<string, unknown>][] = [];
+  try {
+    const parsed = JSON.parse(questions) as Record<string, Record<string, unknown>>;
+    entries = Object.entries(parsed).filter(([, value]) => value && typeof value === "object");
+  } catch {
+    entries = [];
+  }
+  return <div className={styles.questionPreview}>
+    <p className={styles.previewLabel}>Key &amp; instructions</p>
+    {entries.length === 0 ? <p className={styles.previewEmpty}>Add a primitive question to preview it here.</p> : entries.map(([key, value]) => (
+      <div className={styles.previewRow} key={key}>
+        <div><strong>{key}</strong><span>{String(value.instructions || "")}</span></div>
+        <em>{String(value.type || "question")}</em>
+      </div>
+    ))}
+  </div>;
 }
 
 function Examples({ onPick }: { onPick: (id: PresetId) => void }) {
